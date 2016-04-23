@@ -1,4 +1,4 @@
-var DataUtilites = {
+angular.module('hc.data-utilites', []).value('DataUtilites', {
     _getRange: function ( minMax, value ) {
         if ( value === undefined ) {
             return minMax;
@@ -6,8 +6,17 @@ var DataUtilites = {
             return {
                 min: Math.min(minMax.min, value),
                 max: Math.max(minMax.max, value)
-            }
+            };
         }
+    },
+    _getXRange: function ( data, yearSuffix ) {
+        return Object.keys(data).map(function ( year ) {
+            return yearSuffix ? year.replace(yearSuffix, '') : year;
+        }).map(function ( year ) {
+            return year - 0;
+        }).filter(function ( year ) {
+            return !isNaN(year);
+        }).reduce(this._getRange, {min: 9999, max: 0});
     },
     COLORS: [ '#D1BD8C', '#B7BF54', '#488652', '#CC6B67', '#8BC669', '#91547F', '#D47DA3', '#D87D45',
         '#81D4FA', '#4FC3F7', '#29B6F6', '#03A9F4',
@@ -17,45 +26,34 @@ var DataUtilites = {
         '#4DD0E1', '#26C6DA', '#00BCD4', '#00ACC1',
         '#0097A7', '#00838F', '#006064', '#84FFFF'
     ],
-    getXRange: function ( data, yearSuffix ) {
-        return Object.keys(data).map(function ( year ) {
-            return yearSuffix ? year.replace(yearSuffix, '') : year;
-        }).map(function ( year ) {
-            return year - 0;
-        }).filter(function ( year ) {
-            return !isNaN(year)
-        }).reduce(this._getRange, { min: 9999, max: 0 });
-    },
     itemMapper: function ( range, yearSuffix, key ) {
-        var COLORS = this.COLORS;
+        var colors = this.COLORS;
         return function ( item, index ) {
             var years = [];
             for ( var year = range.min; year <= range.max; year++ ) {
-                var val = item[ yearSuffix + year ];
+                var val = item[yearSuffix + year];
                 years.push(val !== '' ? val - 0 : undefined);
             }
             return {
-                color: COLORS[ index ],
-                name: item[ key ],
+                id: index,
+                style: item.Style,
+                color: item.Color || colors[index],
+                title: item.Mouseover,
+                width: item.Width,
+                name: item[key],
+                ID: item.ID,
                 years: years
-            }
-        }
+            };
+        };
     },
     getYRange: function ( data ) {
         return data.reduce(function ( years, yearData ) {
             return years.concat(yearData.years);
-        }, []).reduce(this._getRange, { min: 9999, max: 0 });
+        }, []).reduce(this._getRange, {min: 9999, max: 0});
     },
     formatData: function ( data, yearSuffix, key ) {
         yearSuffix = yearSuffix || '';
-        var range = this.getXRange(data[ 0 ], yearSuffix);
-        data = data.map(this.itemMapper(range, yearSuffix, key));
-        return {
-            range: {
-                x: range,
-                y: this.getYRange(data)
-            },
-            data: data.reverse()
-        };
+        var range = this._getXRange(data[0], yearSuffix);
+        return data.map(this.itemMapper(range, yearSuffix, key));
     }
-};
+});

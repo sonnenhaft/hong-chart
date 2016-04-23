@@ -1,0 +1,46 @@
+
+<svg xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="greenHongGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FEFEFE" stop-opacity="1"></stop>
+            <stop offset="100%" stop-color="#F4FAF0" stop-opacity="1"></stop>
+        </linearGradient>
+    </defs>
+    <!--TODO: add radius in here, and add circle as mask, not as component-->
+    <g transform="translate(1,1)">
+        <rect rx="25" ry="25" fill="url(#greenHongGradient)" width="99.5%" height="99.5%" stroke="orange" stroke-opacity="0.5"></rect>
+    </g>
+
+    <g class="main" font-size="100%">
+        <g stroke-dasharray="10,5" opacity="0" stroke="black" class="target-lines opacity-animate">
+            <line x2="0" y2="0" x1="0" y1="0" class="x-line"></line>
+            <line x2="0" y2="0" x1="0" y1="0" class="y-line"></line>
+        </g>
+        <g class="y axis"></g>
+        <g class="x axis"></g>
+        <g class="chart-lines"></g>
+        <g class="chart-lines-hover" opacity="0" cursor="pointer"></g>
+        <g class="logo">
+            <g transform="translate(5,-3)">
+                <text font-family="georgia" font-size="10">engergetics</text>
+                <circle fill="orange" r="1.5" cx="53" cy="-7"></circle>
+            </g>
+        </g>
+        <path class="bau-reduce-area" fill="#E5B951" opacity="0.2" cursor="pointer"></path>
+        <g fill="black" font-size="90%">
+            <g class="y-axis-label">
+                <g transform="translate(-35, -10) rotate(270)">
+                    <text dx="-63" font-weight="bold" fill="#97C37C">Emissions</text>
+                    <text font-size="80%">(MtCO₂-e)</text>
+                </g>
+            </g>
+            <g class="x-axis-label">
+                <g transform="translate(0, 27)" font-size="80%">
+                    <text dx="-24" font-weight="bold" fill="#97C37C">Time</text>
+                    <text>Years</text>
+                </g>
+            </g>
+        </g>
+    </g>
+    <circle fill="white" cx="100%" cy="50%" r="25" stroke="orange" stroke-width="1px" stroke-opacity="0.5"></circle>
+</svg>

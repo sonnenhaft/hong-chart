@@ -1,0 +1,32 @@
+[svg-hong-chart] {
+    .axis {
+        path, line {
+            fill: none;
+            stroke: #888887;
+            shape-rendering: crispEdges;
+        }
+        text {
+            fill: #97C37C;
+        }
+    }
+
+    .chart-lines {
+        path {
+            fill: none;
+            opacity: 0.5;
+        }
+        circle {
+            stroke: white;
+            cursor: pointer;
+            transition: r 0.3s ease-out;
+            &.big {
+                r: 9
+            }
+        }
+
+    }
+
+    .bau-reduce-area:hover {
+        opacity: 0.5;
+    }
+}
