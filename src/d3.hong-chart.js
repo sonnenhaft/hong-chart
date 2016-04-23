@@ -1,17 +1,22 @@
 window.d3.selection.prototype.hongChart = function () {
-    var margin = { top: 20, right: 20, bottom: 30, left: 25 };
+    var margin = { top: 25, right: 40, bottom: 20, left: 25 };
     var currentSvgElement = this;
+
+    function translate( x, y ) {return { transform: 'translate(' + x + ',' + y + ')' };}
 
     var x = d3.scale.linear();
     var y = d3.scale.linear();
     var xAxis = d3.svg.axis().orient('bottom').tickSize(5, 0).tickFormat(function ( d ) {return d;});
     var yAxis = d3.svg.axis().orient('left').tickSize(3, 0);
-    var svg = currentSvgElement.select('.main').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+    var svg = currentSvgElement.select('.main').attr(translate(margin.left, margin.top));
+
+    var scaleFactor = 1;
 
     function updateWidth() {
-        var scalableSvgWidth = currentSvgElement[ 0 ][ 0 ].parentElement.offsetWidth;
-        var width = scalableSvgWidth - margin.left - margin.right;
-        var height = scalableSvgWidth / 2 - margin.top - margin.bottom;
+        var htmlWidth = currentSvgElement[ 0 ][ 0 ].parentElement.offsetWidth;
+        scaleFactor = htmlWidth > 325 ? 1 : 0.15 + 0.85*(htmlWidth / 325);
+        var width = htmlWidth - margin.left - margin.right;
+        var height = htmlWidth / 2 - margin.top - margin.bottom;
         x.range([ 0, width ]);
         y.range([ height, 0 ]);
         xAxis.scale(x);
@@ -20,7 +25,9 @@ window.d3.selection.prototype.hongChart = function () {
             width: width + margin.left + margin.right,
             height: height + margin.top + margin.bottom
         });
-        svg.select('.x.axis').attr('transform', 'translate(0,' + height + ')');
+        svg.attr({ 'font-size': 100 * scaleFactor + '%' });
+        svg.select('.x.axis').attr(translate(0, height));
+        svg.select('.x-axis-label').attr(translate(width, height));
     }
 
     updateWidth();
@@ -38,26 +45,22 @@ window.d3.selection.prototype.hongChart = function () {
         var yCoord = function ( d ) {return y(d || r.y.min);};
         var line = d3.svg.line().x(xCoord).y(yCoord).interpolate('monotone');
 
-        svg.transition().duration(opt_noTransition ? 0 : 500).each(function(){
+        svg.transition().duration(opt_noTransition ? 0 : 500).each(function () {
 
             svg.select('.lines').bindData('path', data.data, {
-                'stroke': function ( chart ) {return chart.color;},
-                'class': 'line'
+                'class': 'line',
+                'stroke': function ( chart ) {return chart.color;}
             }).transition().attr({ d: function ( chart ) {return line(chart.years)} });
 
             svg.select('.lines').bindData('g', data.data, {
                 'class': 'dots',
-                fill: function ( d ) {
-                    console.log(d)
-                    return d.color;}
+                fill: function ( d ) {return d.color;}
             }).bindData('circle', function ( data ) {
                 return data.years
             }).transition().attr({
                 cx: xCoord,
                 cy: yCoord,
-                r: function ( value ) {
-                    return value === undefined ? 0 : 3;
-                }
+                r: function ( value ) { return value === undefined ? 0 : 3*scaleFactor;}
             });
         });
     }

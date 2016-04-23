@@ -13,9 +13,9 @@ Promise.all([
     var hongChart = d3.select('svg').hongChart();
 
     hongChart.render(data[ 2 ], 2016);
-    window.setTimeout(function(){
-        hongChart.render(data[ 1 ], 1);
-    }, 500)
+    //window.setTimeout(function(){
+    //    hongChart.render(data[ 1 ], 1);
+    //}, 500)
     window.onresize = function updateWindow() {
         hongChart.updateWidth();
         hongChart.render(data[ 2 ], 2016, true);
