@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Hong Chart Demo</title>
-    <script src="d3-v3.5.16.js"></script>
-    <script src="angular-v1.5.5.js"></script>
+
+
+    <!-- process:remove -->
+    <script src="src/vendor/d3-v3.5.16.js"></script>
+    <script src="src/vendor/angular-v1.5.5.js"></script>
 
     <script src="src/data-utilites.js"></script>
 
@@ -17,9 +20,22 @@
 
     <script src="src/hong-layout/hong-layout.js"></script>
     <link rel="stylesheet" href="src/hong-layout/hong-layout.css">
+    <!-- /process -->
+
+    <!-- inline .tmp/all.js -->
+    <!-- process:template
+        <script src=".tmp/all.js" inline></script>
+    /process -->
+    <!-- inline .tmp/templates.js -->
+    <!-- process:template
+        <script src=".tmp/templates.js" inline></script>
+    /process -->
+    <!-- inline .tmp/all.css -->
+    <!-- process:template
+        <link rel="stylesheet" href=".tmp/all.css" inline>
+    /process -->
 </head>
 <body ng-app="hong-layout">
-hello kitty <br>
 <hong-layout></hong-layout>
 </body>
 </html>

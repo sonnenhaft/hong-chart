@@ -36,7 +36,7 @@ window.d3.selection.prototype.hongChart = function () {
         render: function ( data, opt_offsetArg, opt_noTransition ) {
             opt_offsetArg = opt_offsetArg || 0;
             var filteredData = data.filter(function ( d, i ) {return d.$selected;});
-            var yRange = DataUtilites.getYRange(filteredData);
+            var yRange = window.DataUtilites.getYRange(filteredData);
             var bauChart = data[ 0 ];
             x.domain([ 0 + opt_offsetArg, bauChart.years.length - 1 + opt_offsetArg ]);
             y.domain([ yRange.min / 1.01, yRange.max * 1.01 ]);

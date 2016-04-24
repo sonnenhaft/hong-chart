@@ -1,4 +1,4 @@
-var DataUtilites = {
+window.DataUtilites = {
     _getRange: function ( minMax, value ) {
         if ( value === undefined ) {
             return minMax;

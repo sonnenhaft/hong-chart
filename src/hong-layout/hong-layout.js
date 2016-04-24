@@ -1,6 +1,6 @@
 angular.module('hong-layout', [
     'checkboxes-menu'
-]).directive('hongLayout', function ( $timeout ) {
+]).directive('hongLayout', function ( $timeout, DataUtilites ) {
     return {
         templateUrl: 'src/hong-layout/hong-layout.html',
         link: function ( $scope, $element ) {
@@ -74,4 +74,6 @@ angular.module('hong-layout', [
             });
         }
     }
+}).factory('DataUtilites', function(){
+    return window.DataUtilites;
 });
