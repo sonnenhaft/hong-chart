@@ -19,8 +19,22 @@ angular.module('demo-app', [
                 });
             }).then(function ( data ) {
                 var hongChart = d3.select('svg').hongChart();
-                $scope.abatementMeasures = data[ 0 ];
+                var measures = $scope.abatementMeasures = data[ 0 ];
                 $scope.targetsAndBaseLine = data[ 2 ];
+
+                var map = measures.reduce(function ( map, d ) {
+                    map[ d.ID ] = d;
+                    return map;
+                }, {});
+
+                measures.filter(function ( d ) {
+                    return /\d\.\d\.\d/.test(d.ID)
+                }).forEach(function ( d ) {
+                    var parent = map[ d.ID.slice(0, 3) ];
+                    parent.dropdowns = parent.dropdowns || [];
+                    measures.splice(measures.indexOf(d), 1);
+                    parent.dropdowns.push(d);
+                });
 
                 var charts = $scope.targetsAndBaseLine;
                 charts.forEach(function ( d ) { d.$selected = true;});
@@ -35,9 +49,10 @@ angular.module('demo-app', [
                     otherData.id = -1;
                     otherData.name = 'BAU + abatement';
                     charts.push(otherData);
-                    $scope.abatementMeasures.filter(function ( d ) {
+                    measures.filter(function ( d ) {
                         return d.$selected;
                     }).forEach(function ( selection ) {
+                        selection = selection.$selectedDropDown || selection;
                         otherData.years.forEach(function ( year, yearIndex ) {
                             otherData.years[ yearIndex ] = year - selection.years[ yearIndex ];
                         });

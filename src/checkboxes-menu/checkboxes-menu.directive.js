@@ -1,5 +1,4 @@
-angular.module('checkboxes-menu', [
-]).directive('checkboxesMenu', function () {
+angular.module('checkboxes-menu', []).directive('checkboxesMenu', function ( $timeout ) {
     return {
         scope: { title: '=', data: '=', onUpdate: '&' },
         transclude: true,

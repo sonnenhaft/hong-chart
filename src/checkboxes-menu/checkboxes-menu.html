@@ -4,9 +4,10 @@
         <div class="color-box"
              ng-style="{background: targetChart.color, visibility: targetChart.$selected ? 'visible' : 'hidden'}"></div>
         <input type="checkbox" ng-model="targetChart.$selected" ng-change="onUpdate()" ng-disabled="!$index && false">
-        <span class="real-label">
-            {{targetChart.ID}}
-            {{ targetChart.name }}
-        </span>
+        <span class="real-label">{{ targetChart.name }}</span>
+        <select ng-model="targetChart.$selectedDropDown" ng-change="targetChart.$selected = true;onUpdate()"
+                ng-if="targetChart.dropdowns" ng-init="targetChart.$selectedDropDown = targetChart.dropdowns[0]"
+                ng-options="option.name for option in targetChart.dropdowns track by option.id">
+        </select>
     </label>
 </div>
