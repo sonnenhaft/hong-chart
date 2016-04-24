@@ -1,0 +1,12 @@
+.mmm {
+    display: inline-block;
+    width: 50%;
+    min-width: 200px;
+    vertical-align: top;
+}
+
+.mmm svg {
+    max-width: 100%;
+    box-shadow: 0 0 1px 1px rgba(152, 152, 152, 0.75);
+    font: 10px sans-serif;
+}

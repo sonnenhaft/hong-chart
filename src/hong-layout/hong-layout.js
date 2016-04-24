@@ -1,9 +1,9 @@
-angular.module('demo-app', [
+angular.module('hong-layout', [
     'checkboxes-menu'
-]).directive('demoData', function () {
+]).directive('hongLayout', function ( $timeout ) {
     return {
-        templateUrl: 'src/template.html',
-        link: function ( $scope ) {
+        templateUrl: 'src/hong-layout/hong-layout.html',
+        link: function ( $scope, $element ) {
             Promise.all([
                 'stubs/abatement-measures.csv',
                 'stubs/abatement-measures-v1.csv',
@@ -18,7 +18,6 @@ angular.module('demo-app', [
                     return DataUtilites.formatData(array[ index ], mapping.suffix, mapping.key);
                 });
             }).then(function ( data ) {
-                var hongChart = d3.select('svg').hongChart();
                 var measures = $scope.abatementMeasures = data[ 0 ];
                 $scope.targetsAndBaseLine = data[ 2 ];
 
@@ -38,6 +37,8 @@ angular.module('demo-app', [
 
                 var charts = $scope.targetsAndBaseLine;
                 charts.forEach(function ( d ) { d.$selected = true;});
+
+                var hongChart;
                 $scope.renderChart = function () {
                     hongChart.render(data[ 2 ], 2016);
                 };
@@ -59,10 +60,12 @@ angular.module('demo-app', [
                     });
                     $scope.renderChart();
                 };
-
                 charts.push([]);
-                $scope.applyAbatement();
-                $scope.$digest();
+
+                $timeout(function () {
+                    hongChart = d3.selectAll($element).select('svg').hongChart();
+                    $scope.applyAbatement();
+                });
 
                 window.onresize = function updateWindow() {
                     hongChart.updateWidth();
