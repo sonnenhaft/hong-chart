@@ -17,7 +17,7 @@ var DataUtilites = {
         '#4DD0E1', '#26C6DA', '#00BCD4', '#00ACC1',
         '#0097A7', '#00838F', '#006064', '#84FFFF'
     ],
-    getXRange: function ( data, yearSuffix ) {
+    _getXRange: function ( data, yearSuffix ) {
         return Object.keys(data).map(function ( year ) {
             return yearSuffix ? year.replace(yearSuffix, '') : year;
         }).map(function ( year ) {
@@ -35,8 +35,10 @@ var DataUtilites = {
                 years.push(val !== '' ? val - 0 : undefined);
             }
             return {
+                id: index,
                 color: COLORS[ index ],
                 name: item[ key ],
+                ID: item.ID,
                 years: years
             }
         }
@@ -48,14 +50,7 @@ var DataUtilites = {
     },
     formatData: function ( data, yearSuffix, key ) {
         yearSuffix = yearSuffix || '';
-        var range = this.getXRange(data[ 0 ], yearSuffix);
-        data = data.map(this.itemMapper(range, yearSuffix, key));
-        return {
-            range: {
-                x: range,
-                y: this.getYRange(data)
-            },
-            data: data.reverse()
-        };
+        var range = this._getXRange(data[ 0 ], yearSuffix);
+        return data.map(this.itemMapper(range, yearSuffix, key));
     }
 };

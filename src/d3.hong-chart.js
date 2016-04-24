@@ -14,7 +14,7 @@ window.d3.selection.prototype.hongChart = function () {
 
     function updateWidth() {
         var htmlWidth = currentSvgElement[ 0 ][ 0 ].parentElement.offsetWidth;
-        scaleFactor = htmlWidth > 325 ? 1 : 0.15 + 0.85*(htmlWidth / 325);
+        scaleFactor = htmlWidth > 325 ? 1 : 0.15 + 0.85 * (htmlWidth / 325);
         var width = htmlWidth - margin.left - margin.right;
         var height = htmlWidth / 2 - margin.top - margin.bottom;
         x.range([ 0, width ]);
@@ -31,42 +31,47 @@ window.d3.selection.prototype.hongChart = function () {
     }
 
     updateWidth();
-
-    function render( data, opt_offsetArg, opt_noTransition ) {
-        opt_offsetArg = opt_offsetArg || 0;
-        var r = data.range;
-        x.domain([ r.x.min, r.x.max ]);
-        y.domain([ r.y.min, r.y.max ]);
-
-        svg.select('.x.axis').call(xAxis).selectAll('line').attr('y1', '-3');
-        svg.select('.y.axis').call(yAxis).selectAll('line').attr('x1', '3');
-
-        var xCoord = function ( d, i ) { return x(opt_offsetArg + i); };
-        var yCoord = function ( d ) {return y(d || r.y.min);};
-        var line = d3.svg.line().x(xCoord).y(yCoord).interpolate('monotone');
-
-        svg.transition().duration(opt_noTransition ? 0 : 500).each(function () {
-
-            svg.select('.lines').bindData('path', data.data, {
-                'class': 'line',
-                'stroke': function ( chart ) {return chart.color;}
-            }).transition().attr({ d: function ( chart ) {return line(chart.years)} });
-
-            svg.select('.lines').bindData('g', data.data, {
-                'class': 'dots',
-                fill: function ( d ) {return d.color;}
-            }).bindData('circle', function ( data ) {
-                return data.years
-            }).transition().attr({
-                cx: xCoord,
-                cy: yCoord,
-                r: function ( value ) { return value === undefined ? 0 : 3*scaleFactor;}
-            });
-        });
-    }
-
     return {
         updateWidth: updateWidth,
-        render: render
+        render: function ( data, opt_offsetArg, opt_noTransition ) {
+            opt_offsetArg = opt_offsetArg || 0;
+            var filteredData = data.filter(function ( d, i ) {return d.$selected;});
+            var yRange = DataUtilites.getYRange(filteredData);
+            var bauChart = data[ 0 ];
+            x.domain([ 0 + opt_offsetArg, bauChart.years.length - 1 + opt_offsetArg ]);
+            y.domain([ yRange.min / 1.01, yRange.max * 1.01 ]);
+
+            svg.select('.x.axis').call(xAxis).selectAll('line').attr('y1', '-3');
+            svg.select('.y.axis').call(yAxis).selectAll('line').attr('x1', '3');
+
+            var xCoord = function ( d ) {return x(opt_offsetArg + d.x);};
+            var yCoord = function ( d ) {return y(d.y);};
+            var line = d3.svg.line().x(xCoord).y(yCoord).interpolate('monotone');
+
+            function cover( years ) {
+                var definedIndex = years.lastIndexOf(undefined);
+                return years.map(function ( y, x ) {
+                    if ( y === undefined ) {
+                        return { x: definedIndex, y: bauChart.years[ definedIndex ] };
+                    } else {
+                        return { x: x, y: y };
+                    }
+                })
+            }
+
+            function key( k ) {return function ( d ) {return d[ k ];}; }
+
+            svg.transition().duration(opt_noTransition ? 0 : 500).each(function () {
+                svg.select('.chart-lines').bindData('path', filteredData, null, 'id').attr({
+                    stroke: key('color')
+                }).transition().attr({ d: function ( chart ) {return line(cover(chart.years));} });
+
+                svg.select('.chart-lines').bindData('g', filteredData, null, 'id').attr({
+                    fill: key('color')
+                }).bindData('circle', function ( data ) {
+                    return cover(data.years);
+                }).transition().attr({ cx: xCoord, cy: yCoord, r: 3 * scaleFactor });
+            });
+        }
     };
 };
