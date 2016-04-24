@@ -64,6 +64,11 @@ angular.module('hong-layout', [
 
                 $timeout(function () {
                     hongChart = d3.selectAll($element).select('svg').hongChart();
+                    hongChart.setTooltipFn(function ( yearIndex, chartIndex, toShow ) {
+                        $scope.tooltipIndex = yearIndex;
+                        charts[ chartIndex ].$highlight = toShow;
+                        $scope.$digest();
+                    });
                     $scope.applyAbatement();
                 });
 
@@ -74,6 +79,6 @@ angular.module('hong-layout', [
             });
         }
     }
-}).factory('DataUtilites', function(){
+}).factory('DataUtilites', function () {
     return window.DataUtilites;
 });

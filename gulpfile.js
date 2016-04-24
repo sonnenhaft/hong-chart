@@ -16,8 +16,9 @@ gulp.task('uglifyCSS', function () {
 });
 gulp.task('uglifyJS', function () {
     return gulp.src([
-            'src/vendor/*.js',
+            'src/vendor/angular-v1.5.5.js',
             'src/hong-layout/hong-layout.js',
+            'src/vendor/d3-v3.5.16.js',
             'src/**/*.js'
         ])
         .pipe(require('gulp-ng-annotate')())

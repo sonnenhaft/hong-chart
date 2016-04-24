@@ -24,3 +24,10 @@
         </g>
     </g>
 </svg>
+<div class="tooltip" style="opacity: 0">
+    <div ng-repeat="chart in targetsAndBaseLine" ng-class="{bold: chart.$highlight}">
+        <div class="color-box" ng-style="{background: chart.color}"></div>
+        {{chart.name}}
+        <i>{{chart.years[tooltipIndex]}}</i>
+    </div>
+</div>

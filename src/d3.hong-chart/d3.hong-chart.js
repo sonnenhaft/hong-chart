@@ -33,7 +33,12 @@ window.d3.selection.prototype.hongChart = function () {
     updateWidth();
     return {
         updateWidth: updateWidth,
+        tooltipFn: function () {},
+        setTooltipFn: function ( fn ) {
+            this.tooltipFn = fn;
+        },
         render: function ( data, opt_offsetArg, opt_noTransition ) {
+            var tooltipFn = this.tooltipFn;
             opt_offsetArg = opt_offsetArg || 0;
             var filteredData = data.filter(function ( d, i ) {return d.$selected;});
             var yRange = window.DataUtilites.getYRange(filteredData);
@@ -61,6 +66,7 @@ window.d3.selection.prototype.hongChart = function () {
 
             function key( k ) {return function ( d ) {return d[ k ];}; }
 
+            var tooltip = d3.select('.tooltip');
             svg.transition().duration(opt_noTransition ? 0 : 500).each(function () {
                 svg.select('.chart-lines').bindData('path', filteredData, null, 'id').attr({
                     stroke: key('color')
@@ -70,6 +76,23 @@ window.d3.selection.prototype.hongChart = function () {
                     fill: key('color')
                 }).bindData('circle', function ( data ) {
                     return cover(data.years);
+                }).on({
+                    mouseenter: function () {
+                        d3.select(this).transition().duration(250).attr({ r: 3 * scaleFactor * 2 });
+                    },
+                    mouseover: function ( d, yearIndex, chartIndex ) {
+                        tooltipFn(yearIndex, chartIndex, true);
+                        tooltip.transition().duration(250).style({
+                            opacity: 0.9,
+                            left: (d3.event.pageX + 10) + 'px',
+                            top: (d3.event.pageY - 28) + 'px'
+                        });
+                    },
+                    mouseout: function ( d, yearIndex, chartIndex ) {
+                        tooltipFn(yearIndex, chartIndex, false);
+                        d3.select(this).transition().duration(700).attr({ r: 3 * scaleFactor });
+                        tooltip.transition().duration(1500).style('opacity', 0);
+                    }
                 }).transition().attr({ cx: xCoord, cy: yCoord, r: 3 * scaleFactor });
             });
         }

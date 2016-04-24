@@ -17,5 +17,17 @@
 
 .chart-lines circle {
     stroke: white;
-    stroke-width: 1
+    stroke-width: 1;
+    cursor: pointer;
+}
+
+div.tooltip {
+    position: absolute;
+    min-width: 36px;
+    padding: 4px;
+    font: 8px sans-serif;
+    background: white;
+    border: 1px solid black;
+    border-radius: 3px;
+    pointer-events: none;
 }
