@@ -15,15 +15,20 @@
     opacity: 0.5;
 }
 
-svg circle {
+svg .chart-lines circle {
     stroke: white;
     stroke-width: 1px;
     cursor: pointer;
+    r: 2.5px;
+    transition: r 0.3s ease-out;
 }
 
-.bau-reduce-area {
-    fill: #E5B951;
-    opacity: 0.2;
+svg circle.hovered-circle {
+    r: 4px;
+}
+
+svg circle.hovered-circle.big {
+    r: 6px
 }
 
 .bau-reduce-area:hover {
@@ -41,12 +46,17 @@ div.tooltip {
     pointer-events: none;
     opacity: 0;
 }
+
 div.tooltip .content {
-     padding: 3px;
+    padding: 3px;
 }
 
 div.tooltip .header {
     padding: 1px 3px;
     background: #E5B951;
     color: white;
+}
+
+.opacity-animate {
+    transition: opacity 0.5s ease-out;
 }

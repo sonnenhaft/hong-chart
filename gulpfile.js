@@ -1,16 +1,14 @@
 var gulp = require('gulp');
+var addsrc = require('gulp-add-src');
+var concat = require('gulp-concat');
 
-gulp.task('uglifyTemplates', function () {
+gulp.task('uglifyJS', function () {
     return gulp.src('src/**/*.html')
         .pipe(require('gulp-angular-templatecache')({
             root: 'src',
             module: 'hong-layout'
         }))
-        .pipe(addsrc.prepend([
-            'src/hong-layout/hong-layout.js',
-            'src/**/*.js',
-            '!src/vendor/**/*'
-        ]))
+        .pipe(addsrc.prepend('src/**/*.js'))
         .pipe(require('gulp-ng-annotate')())
         .pipe(require('gulp-uglify')())
         .pipe(addsrc.prepend([
@@ -21,26 +19,20 @@ gulp.task('uglifyTemplates', function () {
         .pipe(gulp.dest('.tmp'))
 });
 
-var addsrc = require('gulp-add-src');
-var concat = require('gulp-concat');
 gulp.task('uglifyCSS', function () {
-    return gulp.src([
-            'src/**/*.css'
-        ])
+    return gulp.src('src/**/*.css')
         .pipe(require('gulp-minify-css')())
         .pipe(concat('all.css'))
         .pipe(gulp.dest('.tmp'));
 });
 
-gulp.task('inlineSources', [ 'uglifyCSS', 'uglifyJS', 'uglifyTemplates' ], function () {
+gulp.task('inlineSources', [ 'uglifyCSS', 'uglifyJS' ], function () {
     return gulp.src('./index.html')
         .pipe(require('gulp-processhtml')({
             commentMarker: 'process',
             process: true
         }))
-        .pipe(require('gulp-inline-source')({
-            compress: false
-        }))
+        .pipe(require('gulp-inline-source')({ compress: false }))
         .pipe(gulp.dest('.tmp'));
 });
 
@@ -48,7 +40,7 @@ gulp.task('copy-stubs', function () {
     return gulp.src('stubs/*').pipe(require('gulp-copy')('.tmp'))
 });
 
-gulp.task('build', [ 'copy-stubs', 'inlineSources' ], function () {
+gulp.task('build', [ 'inlineSources' ], function () {
     return gulp.src([ '.tmp/stubs/*', '.tmp/index.html' ], { base: '.tmp' })
         .pipe(require('gulp-zip')('hong-chart.zip'))
         .pipe(gulp.dest('.tmp'));

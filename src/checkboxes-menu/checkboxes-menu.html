@@ -1,5 +1,5 @@
 <div class="badge" ng-transclude></div>
-<div ng-repeat="chart in data" class="checkbox" ng-class="{bold: chart.$highlight}">
+<div ng-repeat="chart in data track by chart.id" class="checkbox" ng-class="{bold: chart.$highlight}">
     <label>
         <select ng-model="chart.$shiftYear" ng-change="chart.$selected = true;onUpdate()" class="years-checkbox" ng-if="yearsShift"
                 ng-options="year for year in shiftYears track by year">
