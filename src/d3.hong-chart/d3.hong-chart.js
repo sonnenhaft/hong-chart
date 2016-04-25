@@ -6,8 +6,8 @@ window.d3.selection.prototype.hongChart = function () {
 
     var x = d3.scale.linear();
     var y = d3.scale.linear();
-    var xAxis = d3.svg.axis().orient('bottom').tickSize(5, 0);
-    var yAxis = d3.svg.axis().orient('left').tickSize(3, 0);
+    var xAxis = d3.svg.axis().orient('bottom').tickSize(4, 0);
+    var yAxis = d3.svg.axis().orient('left').tickSize(4, 0);
     var svg = currentSvgElement.select('.main').attr(translate(margin.left, margin.top));
 
     var scaleFactor;
@@ -48,8 +48,8 @@ window.d3.selection.prototype.hongChart = function () {
             x.domain([ 0, bauChart.years.length - 1 ]);
             y.domain([ yRange.min / 1.01, yRange.max * 1.01 ]);
 
-            svg.select('.x.axis').call(xAxis.tickFormat(function ( d ) {return opt_offsetArg + d;})).selectAll('line').attr('y1', '-3');
-            svg.select('.y.axis').call(yAxis).selectAll('line').attr('x1', '3');
+            svg.select('.x.axis').call(xAxis.tickFormat(function ( d ) {return opt_offsetArg + d;}));
+            svg.select('.y.axis').call(yAxis);
 
             var xCoord = function ( d ) {return x(d.x);};
             var yCoord = function ( d ) {return y(d.y);};
@@ -76,7 +76,9 @@ window.d3.selection.prototype.hongChart = function () {
 
                 svg.select('.chart-lines').bindData('g', filteredData, {
                     fill: key('color'),
-                    class: 'circles'
+                    'stroke-width': function(d){
+                        return d.name === 'BAU + abatement' ? 0.5 : 0;
+                    }
                 }, 'id').bindData('circle', function ( data ) {
                     return cover(data.years);
                 }).transition().attr({ cx: xCoord, cy: yCoord, r: 3 * scaleFactor });
@@ -95,7 +97,7 @@ window.d3.selection.prototype.hongChart = function () {
                                 svg.select('.x-line').attr({ x1: x, x2: x, visibility: 'visible' });
                                 svg.select('.y-line').attr({ y1: y, y2: y, visibility: 'visible' });
                             }
-                            circle.transition().duration(250).attr({ r: (isCurrentChart ? 7 : 4) * scaleFactor });
+                            circle.transition().duration(250).attr({ r: (isCurrentChart ? 6 : 4) * scaleFactor });
                         });
                         tooltip.transition().duration(250).style({
                             opacity: 0.9,
@@ -106,7 +108,7 @@ window.d3.selection.prototype.hongChart = function () {
                     mouseleave: function ( d, yearIndex, chartIndex ) {
                         tooltipFn(yearIndex, chartIndex, false);
                         svg.selectAll('.chart-lines g')[ 0 ].forEach(function ( d ) {
-                            d3.select(d3.select(d).selectAll('circle')[ 0 ][ yearIndex ]).transition().duration(700).attr({ r: 3 * scaleFactor });
+                            d3.select(d3.select(d).selectAll('circle')[ 0 ][ yearIndex ]).transition().duration(700).attr({ r: 2.5 * scaleFactor });
                         });
                         svg.selectAll('.y-line, .x-line').attr({ visibility: 'hidden' });
                         tooltip.transition().duration(1500).style('opacity', 0);

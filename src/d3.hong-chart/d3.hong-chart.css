@@ -11,23 +11,42 @@
 
 .chart-lines path {
     fill: none;
-    stroke-width: 2px;
+    stroke-width: 1px;
     opacity: 0.5;
 }
 
 svg circle {
     stroke: white;
-    stroke-width: 1;
+    stroke-width: 1px;
     cursor: pointer;
+}
+
+.bau-reduce-area {
+    fill: #E5B951;
+    opacity: 0.2;
+}
+
+.bau-reduce-area:hover {
+    opacity: 0.5;
 }
 
 div.tooltip {
     position: absolute;
     min-width: 36px;
-    padding: 4px;
     font: 8px sans-serif;
     background: white;
-    border: 1px solid black;
-    border-radius: 3px;
+    border: 1px solid #E5B951;
+    box-shadow: 0 0 1px 0 rgba(69, 66, 66, 0.75);
+    border-radius: 2px;
     pointer-events: none;
+    opacity: 0;
+}
+div.tooltip .content {
+     padding: 3px;
+}
+
+div.tooltip .header {
+    padding: 1px 3px;
+    background: #E5B951;
+    color: white;
 }
