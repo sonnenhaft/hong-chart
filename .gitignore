@@ -2,3 +2,5 @@
 .tmp
 build
 hong-chart.zip
+node_modules
+bower_components
