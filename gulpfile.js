@@ -11,13 +11,11 @@ var concat = require('gulp-concat');
 gulp.task('uglifyCSS', function () {
     return gulp.src([
             'src/**/*.css'
-    ])
+        ])
         .pipe(require('gulp-minify-css')())
         .pipe(concat('all.css'))
         .pipe(gulp.dest('.tmp'));
 });
-
-
 
 gulp.task('uglifyJS', function () {
     return gulp.src([
