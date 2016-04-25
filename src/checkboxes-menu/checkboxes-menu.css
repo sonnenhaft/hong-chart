@@ -3,6 +3,7 @@ checkboxes-menu, option, select {
     font-size: 8px;
 }
 
+checkboxes-menu .checkbox,
 checkboxes-menu label,
 checkboxes-menu label input {
     cursor: pointer;
@@ -35,6 +36,19 @@ checkboxes-menu input {
     font-weight: bold;
     padding: 1px 2px;
     background: linear-gradient(to right, #549049 0%, #8bc558 100%)
+}
+
+.years-checkbox:after {
+    display: none;
+}
+.years-checkbox {
+    text-align: left;
+    padding: 0;
+    border: none;
+    box-shadow: 0 0 1px 0 rgba(69, 66, 66, 0.75);
+    border-radius: 1px;
+    width: 35px;
+    font-size: 6px;
 }
 
 .real-label {

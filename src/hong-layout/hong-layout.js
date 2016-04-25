@@ -53,9 +53,13 @@ angular.module('hong-layout', [
                     measures.filter(function ( d ) {
                         return d.$selected;
                     }).forEach(function ( selection ) {
+                        var $shiftYear = selection.$shiftYear - 2016;
                         selection = selection.$selectedDropDown || selection;
                         otherData.years.forEach(function ( year, yearIndex ) {
-                            otherData.years[ yearIndex ] = year - selection.years[ yearIndex ];
+                            if ( otherData.years.length - 1 >= yearIndex + $shiftYear ) {
+                                year = otherData.years[ yearIndex + $shiftYear ];
+                                otherData.years[ yearIndex + $shiftYear ] = year - selection.years[ yearIndex ];
+                            }
                         });
                     });
                     $scope.renderChart();

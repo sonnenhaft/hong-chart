@@ -1,9 +1,14 @@
 <div class="badge" ng-transclude></div>
 <div ng-repeat="chart in data" class="checkbox" ng-class="{bold: chart.$highlight}">
     <label>
-        <div class="color-box"
+        <select ng-model="chart.$shiftYear" ng-change="chart.$selected = true;onUpdate()" class="years-checkbox" ng-if="yearsShift"
+                ng-options="year for year in shiftYears track by year">
+        </select>
+    </label>
+    <label>
+        <div class="color-box" ng-if="!yearsShift"
              ng-style="{background: chart.color, visibility: chart.$selected ? 'visible' : 'hidden'}"></div>
-        <input type="checkbox" ng-model="chart.$selected" ng-change="onUpdate()" ng-disabled="!$index && false">
+        <input type="checkbox" ng-model="chart.$selected" ng-change="onUpdate()" ng-disabled="!$index && !yearsShift">
         <span class="real-label">{{ chart.name }}</span>
         <select ng-model="chart.$selectedDropDown" ng-change="chart.$selected = true;onUpdate()"
                 ng-if="chart.dropdowns" ng-init="chart.$selectedDropDown = chart.dropdowns[0]"
