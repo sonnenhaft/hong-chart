@@ -11,13 +11,11 @@
 
 .chart-lines path {
     fill: none;
-    stroke-width: 1px;
     opacity: 0.5;
 }
 
 svg .chart-lines circle {
     stroke: white;
-    stroke-width: 1px;
     cursor: pointer;
     transition: r 0.3s ease-out;
 }

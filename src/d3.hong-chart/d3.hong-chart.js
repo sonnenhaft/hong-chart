@@ -14,7 +14,7 @@ window.d3.selection.prototype.hongChart = function () {
 
     function updateWidth() {
         var htmlWidth = currentSvgElement[ 0 ][ 0 ].parentNode.offsetWidth;
-        scaleFactor = htmlWidth > 400 ? 1 :  (htmlWidth / 400);
+        scaleFactor = htmlWidth > 400 ? 1 : (htmlWidth / 400);
         svg.attr(translate(margin.left, margin.top));
         var width = htmlWidth - margin.left - margin.right;
         var height = htmlWidth / 2 - margin.top - margin.bottom;
@@ -72,14 +72,13 @@ window.d3.selection.prototype.hongChart = function () {
             var tooltip = d3.select('.tooltip');
             svg.transition().duration(opt_noTransition ? 0 : 500).each(function () {
                 svg.select('.chart-lines').bindData('path', filteredData, {
-                    stroke: key('color')
+                    stroke: key('color'),
+                    'stroke-width': 2 * scaleFactor
                 }, 'id').transition().attr({ d: function ( chart ) {return line(cover(chart.years));} });
 
                 svg.select('.chart-lines').bindData('g', filteredData, {
                     fill: key('color'),
-                    'stroke-width': function ( d ) {
-                        return d.name === 'BAU + abatement' ? 0.5 : 0;
-                    }
+                    'stroke-width': 1
                 }, 'id').bindData('circle', function ( data ) {
                     return cover(data.years);
                 }).transition().attr({ cx: xCoord, cy: yCoord, r: scaleFactor * 4 });
