@@ -21,6 +21,8 @@ window.d3.selection.prototype.hongChart = function () {
         y.range([ height, 0 ]);
         xAxis.scale(x);
         yAxis.scale(y);
+        svg.select('.x-line').attr('y1', height);
+        svg.select('.y-line').attr('x1', width);
         currentSvgElement.attr({
             width: width + margin.left + margin.right,
             height: height + margin.top + margin.bottom
@@ -82,11 +84,18 @@ window.d3.selection.prototype.hongChart = function () {
                 svg.select('.chart-lines-hover').bindData('g', filteredData, null, 'id').bindData('circle', function ( data ) {
                     return cover(data.years);
                 }).on({
-                    mouseover: function ( d, yearIndex, chartIndex ) {
-                        tooltipFn(yearIndex, chartIndex, true);
-                        svg.selectAll('.chart-lines g')[ 0 ].forEach(function ( d, i ) {
-                            var radius = i === chartIndex ? 7 : 4;
-                            d3.select(d3.select(d).selectAll('circle')[ 0 ][ yearIndex ]).transition().duration(250).attr({ r: radius * scaleFactor });
+                    mouseenter: function ( d, yearIndex, currentChartIndex ) {
+                        tooltipFn(yearIndex, currentChartIndex, true);
+                        svg.selectAll('.chart-lines g')[ 0 ].forEach(function ( chartNode, chartIndex ) {
+                            var circle = d3.select(d3.select(chartNode).selectAll('circle')[ 0 ][ yearIndex ]);
+                            var isCurrentChart = chartIndex === currentChartIndex;
+                            if ( isCurrentChart ) {
+                                var x = circle.attr('cx');
+                                var y = circle.attr('cy');
+                                svg.select('.x-line').attr({ x1: x, x2: x, visibility: 'visible' });
+                                svg.select('.y-line').attr({ y1: y, y2: y, visibility: 'visible' });
+                            }
+                            circle.transition().duration(250).attr({ r: (isCurrentChart ? 7 : 4) * scaleFactor });
                         });
                         tooltip.transition().duration(250).style({
                             opacity: 0.9,
@@ -94,14 +103,15 @@ window.d3.selection.prototype.hongChart = function () {
                             top: (d3.event.pageY - 28) + 'px'
                         });
                     },
-                    mouseout: function ( d, yearIndex, chartIndex ) {
+                    mouseleave: function ( d, yearIndex, chartIndex ) {
                         tooltipFn(yearIndex, chartIndex, false);
                         svg.selectAll('.chart-lines g')[ 0 ].forEach(function ( d ) {
                             d3.select(d3.select(d).selectAll('circle')[ 0 ][ yearIndex ]).transition().duration(700).attr({ r: 3 * scaleFactor });
                         });
+                        svg.selectAll('.y-line, .x-line').attr({ visibility: 'hidden' });
                         tooltip.transition().duration(1500).style('opacity', 0);
                     }
-                }).attr({ cx: xCoord, cy: yCoord, r: 7 * scaleFactor });
+                }).attr({ cx: xCoord, cy: yCoord, r: 9 * scaleFactor });
 
                 var lastChart = filteredData[ filteredData.length - 1 ];
                 if ( lastChart.name === 'BAU + abatement' ) {
