@@ -1,15 +1,15 @@
 angular.module('hong-layout', [
     'checkboxes-menu'
-]).directive('hongLayout', function ( $timeout, DataUtilites ) {
+]).directive('hongLayout', function ( $timeout, DataUtilites, $q ) {
     return {
         templateUrl: 'src/hong-layout/hong-layout.html',
         link: function ( $scope, $element ) {
-            Promise.all([
+            $q.all([
                 'stubs/abatement-measures.csv',
                 'stubs/abatement-measures-v1.csv',
                 'stubs/targets-and-baseline.csv'
             ].map(function ( url ) {
-                return new Promise(function ( resolve ) { d3.csv(url, resolve); });
+                return $q(function ( resolve ) { d3.csv(url, resolve); });
             })).then(function ( array ) {
                 return [
                     { suffix: 'ReductionYear', key: 'Name' },

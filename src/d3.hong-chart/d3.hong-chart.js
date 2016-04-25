@@ -1,5 +1,5 @@
 window.d3.selection.prototype.hongChart = function () {
-    var margin = { top: 25, right: 40, bottom: 20, left: 25 };
+    var margin = { top: 30, right: 45, bottom: 25, left: 35 };
     var currentSvgElement = this;
 
     function translate( x, y ) {return { transform: 'translate(' + x + ',' + y + ')' };}
@@ -8,13 +8,14 @@ window.d3.selection.prototype.hongChart = function () {
     var y = d3.scale.linear();
     var xAxis = d3.svg.axis().orient('bottom').tickSize(4, 0);
     var yAxis = d3.svg.axis().orient('left').tickSize(4, 0);
-    var svg = currentSvgElement.select('.main').attr(translate(margin.left, margin.top));
+    var svg = currentSvgElement.select('.main');
 
     var scaleFactor;
 
     function updateWidth() {
-        var htmlWidth = currentSvgElement[ 0 ][ 0 ].parentElement.offsetWidth;
-        scaleFactor = htmlWidth > 325 ? 1 : 0.15 + 0.85 * (htmlWidth / 325);
+        var htmlWidth = currentSvgElement[ 0 ][ 0 ].parentNode.offsetWidth;
+        scaleFactor = htmlWidth > 400 ? 1 :  (htmlWidth / 400);
+        svg.attr(translate(margin.left, margin.top));
         var width = htmlWidth - margin.left - margin.right;
         var height = htmlWidth / 2 - margin.top - margin.bottom;
         x.range([ 0, width ]);
@@ -27,7 +28,7 @@ window.d3.selection.prototype.hongChart = function () {
             width: width + margin.left + margin.right,
             height: height + margin.top + margin.bottom
         });
-        svg.attr({ 'font-size': 100 * scaleFactor + '%' });
+        svg.attr({ 'font-size': 130 * scaleFactor + '%' });
         svg.select('.x.axis').attr(translate(0, height));
         svg.select('.x-axis-label').attr(translate(width, height));
     }
@@ -81,14 +82,14 @@ window.d3.selection.prototype.hongChart = function () {
                     }
                 }, 'id').bindData('circle', function ( data ) {
                     return cover(data.years);
-                }).transition().attr({ cx: xCoord, cy: yCoord });
+                }).transition().attr({ cx: xCoord, cy: yCoord, r: scaleFactor * 4 });
 
                 svg.select('.chart-lines-hover').bindData('g', filteredData, null, 'id').bindData('circle', function ( data ) {
                     return cover(data.years);
                 }).on({
                     mouseenter: function ( d, yearIndex, currentChartIndex ) {
                         tooltipFn(yearIndex, currentChartIndex, true);
-                        var circles = svg.selectAll('.chart-lines g circle:nth-child(' + (yearIndex + 1) + ')').classed({ 'hovered-circle': true });
+                        var circles = svg.selectAll('.chart-lines g circle:nth-child(' + (yearIndex + 1) + ')').attr({ r: scaleFactor * 6 });
                         var circle = d3.select(circles[ 0 ][ currentChartIndex ]).classed({ big: true });
                         var x = circle.attr('cx');
                         var y = circle.attr('cy');
@@ -105,15 +106,14 @@ window.d3.selection.prototype.hongChart = function () {
                     mouseleave: function ( d, yearIndex, chartIndex ) {
                         tooltipFn(yearIndex, chartIndex, false);
                         svg.selectAll('.chart-lines g')[ 0 ].forEach(function ( d ) {
-                            d3.select(d3.select(d).selectAll('circle')[ 0 ][ yearIndex ]).classed({
-                                'hovered-circle': false,
+                            d3.select(d3.select(d).selectAll('circle')[ 0 ][ yearIndex ]).attr({ r: scaleFactor * 4 }).classed({
                                 big: false
                             });
                         });
                         svg.select('.target-lines').attr({ opacity: 0 });
                         tooltip.style('opacity', 0);
                     }
-                }).attr({ cx: xCoord, cy: yCoord, r: 7 });
+                }).attr({ cx: xCoord, cy: yCoord, r: scaleFactor * 12 });
 
                 var lastChart = filteredData[ 0 ];
                 if ( lastChart.name === 'BAU + abatement' ) {

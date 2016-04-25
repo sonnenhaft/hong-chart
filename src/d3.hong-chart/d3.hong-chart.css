@@ -19,16 +19,11 @@ svg .chart-lines circle {
     stroke: white;
     stroke-width: 1px;
     cursor: pointer;
-    r: 2.5px;
     transition: r 0.3s ease-out;
 }
 
-svg circle.hovered-circle {
-    r: 4px;
-}
-
-svg circle.hovered-circle.big {
-    r: 6px
+svg circle.big {
+    r: 9
 }
 
 .bau-reduce-area:hover {
@@ -38,7 +33,7 @@ svg circle.hovered-circle.big {
 div.tooltip {
     position: absolute;
     min-width: 36px;
-    font: 8px sans-serif;
+    font: 10px sans-serif;
     background: white;
     border: 1px solid #E5B951;
     box-shadow: 0 0 1px 0 rgba(69, 66, 66, 0.75);
