@@ -6,11 +6,11 @@ window.d3.selection.prototype.hongChart = function () {
 
     var x = d3.scale.linear();
     var y = d3.scale.linear();
-    var xAxis = d3.svg.axis().orient('bottom').tickSize(5, 0).tickFormat(function ( d ) {return d;});
+    var xAxis = d3.svg.axis().orient('bottom').tickSize(5, 0);
     var yAxis = d3.svg.axis().orient('left').tickSize(3, 0);
     var svg = currentSvgElement.select('.main').attr(translate(margin.left, margin.top));
 
-    var scaleFactor = 1;
+    var scaleFactor;
 
     function updateWidth() {
         var htmlWidth = currentSvgElement[ 0 ][ 0 ].parentElement.offsetWidth;
@@ -42,16 +42,16 @@ window.d3.selection.prototype.hongChart = function () {
         render: function ( data, opt_offsetArg, opt_noTransition ) {
             var tooltipFn = this.tooltipFn;
             opt_offsetArg = opt_offsetArg || 0;
-            var filteredData = data.filter(function ( d, i ) {return d.$selected;});
+            var filteredData = data.filter(function ( d, i ) {return d.$selected;}).reverse();
             var yRange = window.DataUtilites.getYRange(filteredData);
             var bauChart = data[ 0 ];
-            x.domain([ 0 + opt_offsetArg, bauChart.years.length - 1 + opt_offsetArg ]);
+            x.domain([ 0, bauChart.years.length - 1 ]);
             y.domain([ yRange.min / 1.01, yRange.max * 1.01 ]);
 
-            svg.select('.x.axis').call(xAxis).selectAll('line').attr('y1', '-3');
+            svg.select('.x.axis').call(xAxis.tickFormat(function ( d ) {return opt_offsetArg + d;})).selectAll('line').attr('y1', '-3');
             svg.select('.y.axis').call(yAxis).selectAll('line').attr('x1', '3');
 
-            var xCoord = function ( d ) {return x(opt_offsetArg + d.x);};
+            var xCoord = function ( d ) {return x(d.x);};
             var yCoord = function ( d ) {return y(d.y);};
             var line = d3.svg.line().x(xCoord).y(yCoord).interpolate('monotone');
 
@@ -113,17 +113,17 @@ window.d3.selection.prototype.hongChart = function () {
                     }
                 }).attr({ cx: xCoord, cy: yCoord, r: 9 * scaleFactor });
 
-                var lastChart = filteredData[ filteredData.length - 1 ];
+                var lastChart = filteredData[ 0 ];
                 if ( lastChart.name === 'BAU + abatement' ) {
                     var lastChartData = cover(lastChart.years);
-                    var borderChartsData = cover(filteredData[ 0 ].years).map(function ( d, i ) {
+                    var borderChartsData = cover(bauChart.years).map(function ( d, i ) {
                         return { x: d.x, y: d.y, y1: lastChartData[ i ].y }
                     });
                     var area = d3.svg.area().x(xCoord).y0(yCoord).y1(function ( d ) { return y(d.y1); });
 
-                    svg.select('.bau-reduce-area').style('visibility', 'visible').transition().attr('d', area(borderChartsData));
+                    svg.select('.bau-reduce-area').attr({ visibility: 'visible' }).transition().attr('d', area(borderChartsData));
                 } else {
-                    svg.select('.bau-reduce-area').style('visibility', 'hidden');
+                    svg.select('.bau-reduce-area').attr({ visibility: 'hidden' });
                 }
             });
         }
