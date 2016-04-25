@@ -15,7 +15,7 @@
     opacity: 0.5;
 }
 
-.chart-lines circle {
+svg circle {
     stroke: white;
     stroke-width: 1;
     cursor: pointer;

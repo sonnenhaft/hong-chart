@@ -68,20 +68,26 @@ window.d3.selection.prototype.hongChart = function () {
 
             var tooltip = d3.select('.tooltip');
             svg.transition().duration(opt_noTransition ? 0 : 500).each(function () {
-                svg.select('.chart-lines').bindData('path', filteredData, null, 'id').attr({
+                svg.select('.chart-lines').bindData('path', filteredData, {
                     stroke: key('color')
-                }).transition().attr({ d: function ( chart ) {return line(cover(chart.years));} });
+                }, 'id').transition().attr({ d: function ( chart ) {return line(cover(chart.years));} });
 
-                svg.select('.chart-lines').bindData('g', filteredData, null, 'id').attr({
-                    fill: key('color')
-                }).bindData('circle', function ( data ) {
+                svg.select('.chart-lines').bindData('g', filteredData, {
+                    fill: key('color'),
+                    class: 'circles'
+                }, 'id').bindData('circle', function ( data ) {
+                    return cover(data.years);
+                }).transition().attr({ cx: xCoord, cy: yCoord, r: 3 * scaleFactor });
+
+                svg.select('.chart-lines-hover').bindData('g', filteredData, null, 'id').bindData('circle', function ( data ) {
                     return cover(data.years);
                 }).on({
-                    mouseenter: function () {
-                        d3.select(this).transition().duration(250).attr({ r: 3 * scaleFactor * 2 });
-                    },
                     mouseover: function ( d, yearIndex, chartIndex ) {
                         tooltipFn(yearIndex, chartIndex, true);
+                        svg.selectAll('.chart-lines g')[ 0 ].forEach(function ( d, i ) {
+                            var radius = i === chartIndex ? 7 : 4;
+                            d3.select(d3.select(d).selectAll('circle')[ 0 ][ yearIndex ]).transition().duration(250).attr({ r: radius * scaleFactor });
+                        });
                         tooltip.transition().duration(250).style({
                             opacity: 0.9,
                             left: (d3.event.pageX + 10) + 'px',
@@ -90,10 +96,25 @@ window.d3.selection.prototype.hongChart = function () {
                     },
                     mouseout: function ( d, yearIndex, chartIndex ) {
                         tooltipFn(yearIndex, chartIndex, false);
-                        d3.select(this).transition().duration(700).attr({ r: 3 * scaleFactor });
+                        svg.selectAll('.chart-lines g')[ 0 ].forEach(function ( d ) {
+                            d3.select(d3.select(d).selectAll('circle')[ 0 ][ yearIndex ]).transition().duration(700).attr({ r: 3 * scaleFactor });
+                        });
                         tooltip.transition().duration(1500).style('opacity', 0);
                     }
-                }).transition().attr({ cx: xCoord, cy: yCoord, r: 3 * scaleFactor });
+                }).attr({ cx: xCoord, cy: yCoord, r: 7 * scaleFactor });
+
+                var lastChart = filteredData[ filteredData.length - 1 ];
+                if ( lastChart.name === 'BAU + abatement' ) {
+                    var lastChartData = cover(lastChart.years);
+                    var borderChartsData = cover(filteredData[ 0 ].years).map(function ( d, i ) {
+                        return { x: d.x, y: d.y, y1: lastChartData[ i ].y }
+                    });
+                    var area = d3.svg.area().x(xCoord).y0(yCoord).y1(function ( d ) { return y(d.y1); });
+
+                    svg.select('.bau-reduce-area').style('visibility', 'visible').transition().attr('d', area(borderChartsData));
+                } else {
+                    svg.select('.bau-reduce-area').style('visibility', 'hidden');
+                }
             });
         }
     };

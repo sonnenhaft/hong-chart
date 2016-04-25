@@ -1,3 +1,6 @@
+if (window.d3.selection.prototype.bindData) {
+    throw new Error('bindData is already defined in d3\'s prototype, app will not work properly');
+}
 window.d3.selection.prototype.bindData = function ( tag, data, opt_attrs, opt_idKey ) {
     var enteredSelection;
     if ( opt_idKey ) {

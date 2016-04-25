@@ -46,7 +46,7 @@ angular.module('hong-layout', [
                 $scope.applyAbatement = function () {
                     charts.pop();
                     var otherData = angular.copy(charts[ 0 ]);
-                    otherData.color = 'black';
+                    otherData.color = 'orange';
                     otherData.id = -1;
                     otherData.name = 'BAU + abatement';
                     charts.push(otherData);
