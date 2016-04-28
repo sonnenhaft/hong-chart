@@ -1,0 +1,26 @@
+{
+  "name": "hong-chart",
+  "description": "hong-chart",
+  "main": "index.html",
+  "authors": [
+    "Vladimir Shein <vlad@cog1.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "d3js"
+  ],
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "d3": "~3.5.16",
+    "angular": "~1.5.5"
+  }
+}
