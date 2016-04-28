@@ -36,6 +36,7 @@ window.DataUtilites = {
             }
             return {
                 id: index,
+                style: item.Style,
                 color: COLORS[ index ],
                 name: item[ key ],
                 ID: item.ID,
