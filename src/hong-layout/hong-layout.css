@@ -22,8 +22,15 @@ img {
     font-size: 18px;
     font-weight: normal;
     color: rgb(244,128,36);
+    margin: 5px;
 }
 
 @media only screen and (max-width: 620px) { .hong-layout-block h1 { font-size: 14px; }}
 @media only screen and (max-width: 500px) { .hong-layout-block h1 { font-size: 10px; }}
 @media only screen and (max-width: 350px) { .hong-layout-block h1 { font-size: 8px; }}
+
+.hong-layout-block .content {
+    font-family: Arial, serif;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
