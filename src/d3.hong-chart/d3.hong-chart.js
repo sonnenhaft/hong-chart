@@ -76,9 +76,9 @@ window.d3.selection.prototype.hongChart = function () {
                 svg.select('.chart-lines').bindData('path', filteredData, {
                     stroke: key('color'),
                     'stroke-dasharray': function(d, i) {
-                        return d.style === 'dashed' ? '10,3' : '0'
+                        return d.style === 'dashed' ? '10,3' : 0;
                     },
-                    'stroke-width': 2 * scaleFactor
+                    'stroke-width': key('width')
                 }, 'id').transition().attr({ d: function ( chart ) {return line(cover(chart.years));} });
 
                 svg.select('.chart-lines').bindData('g', filteredData, {
