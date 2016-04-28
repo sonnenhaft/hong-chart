@@ -13,11 +13,11 @@ angular.module('checkboxes-menu', []).directive('checkboxesMenu', function () {
             $scope.shiftYears = SHIFT_YEARS;
             var removeWatch = $scope.$watch('data', function ( data ) {
                 if ( !data ) {return;}
+                removeWatch();
                 $scope.data.forEach(function ( chart ) {
                     chart.$selected = true;
                     chart.$shiftYear = SHIFT_YEARS[ 0 ];
                 });
-                removeWatch();
             })
         }
     };
