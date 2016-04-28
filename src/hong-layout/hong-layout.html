@@ -1,4 +1,7 @@
-<div class="mmm" style="  width: 70%;" ng-include="'src/hong-layout/svg-template.html'"></div>
+<div class="mmm" style="  width: 70%;">
+        <h1>Meeting Australia’s 2030 emissions reduction target</h1>
+    <div ng-include="'src/hong-layout/svg-template.html'"></div>
+</div>
 <div class="mmm" style="width: 25%; min-width: 0;">
     <div>
         <checkboxes-menu data="targetsAndBaseLine" on-update="renderChart()">
@@ -8,5 +11,6 @@
         <checkboxes-menu data="abatementMeasures" on-update="applyAbatement()" years-shift="true">
             Abatement Measures
         </checkboxes-menu>
+        <img src="src/energetics-ball-logo.png" alt="log" title="logo">
     </div>
 </div>

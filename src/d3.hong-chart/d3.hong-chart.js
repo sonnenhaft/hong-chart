@@ -1,5 +1,5 @@
 window.d3.selection.prototype.hongChart = function () {
-    var margin = { top: 30, right: 45, bottom: 25, left: 35 };
+    var margin = { top: 30, right: 45, bottom: 33, left: 35 };
     var currentSvgElement = this;
 
     function translate( x, y ) {return { transform: 'translate(' + x + ',' + y + ')' };}
@@ -29,8 +29,8 @@ window.d3.selection.prototype.hongChart = function () {
             height: height + margin.top + margin.bottom
         });
         svg.attr({ 'font-size': 130 * scaleFactor + '%' });
-        svg.select('.x.axis').attr(translate(0, height));
-        svg.select('.x-axis-label').attr(translate(width, height));
+        svg.selectAll('.x.axis, .logo').attr(translate(0, height));
+        svg.select('.x-axis-label').attr(translate(width / 2, height));
     }
 
     updateWidth();

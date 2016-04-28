@@ -10,3 +10,14 @@
     box-shadow: 0 0 1px 1px rgba(152, 152, 152, 0.75);
     font: 10px sans-serif;
 }
+
+img {
+    max-width: 100%;
+}
+
+.mmm h1 {
+    font-family: Arial;
+    font-size: 18px;
+    font-weight: normal;
+    color: rgb(244,128,36);
+}
