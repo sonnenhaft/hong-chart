@@ -64,5 +64,9 @@ checkboxes-menu input {
 
 checkboxes-menu .wrapper{
     margin-bottom: 5px;
-    border-radius: 3px;
+    width: 100%;
+    box-shadow: 0 0 1px 1px rgba(152, 152, 152, 0.75);
+    font: 10px sans-serif;
+    overflow: hidden;
+    border-radius: 2px;
 }

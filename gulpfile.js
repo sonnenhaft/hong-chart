@@ -37,11 +37,11 @@ gulp.task('inlineSources', [ 'uglifyCSS', 'uglifyJS' ], function () {
 });
 
 gulp.task('copy-stubs', function () {
-    return gulp.src('stubs/*').pipe(require('gulp-copy')('.tmp'))
+    return gulp.src(['stubs/*.csv', 'src/*.png']).pipe(require('gulp-copy')('.tmp'))
 });
 
 gulp.task('build', [ 'inlineSources' ], function () {
-    return gulp.src([ '.tmp/stubs/*', '.tmp/index.html' ], { base: '.tmp' })
+    return gulp.src([ '.tmp/stubs/*', '.tmp/src/*.png', '.tmp/index.html' ], { base: '.tmp' })
         .pipe(require('gulp-zip')('hong-chart.zip'))
         .pipe(gulp.dest('.tmp'));
 });

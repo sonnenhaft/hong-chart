@@ -1,5 +1,5 @@
 window.d3.selection.prototype.hongChart = function () {
-    var margin = { top: 30, right: 45, bottom: 33, left: 35 };
+    var margin = { top: 15, right: 20, bottom: 33, left: 50 };
     var currentSvgElement = this;
 
     function translate( x, y ) {return { transform: 'translate(' + x + ',' + y + ')' };}
@@ -24,6 +24,7 @@ window.d3.selection.prototype.hongChart = function () {
         yAxis.scale(y);
         svg.select('.x-line').attr('y1', height);
         svg.select('.y-line').attr('x1', width);
+        svg.select('.y-line').attr('x1', width);
         currentSvgElement.attr({
             width: width + margin.left + margin.right,
             height: height + margin.top + margin.bottom
@@ -31,6 +32,7 @@ window.d3.selection.prototype.hongChart = function () {
         svg.attr({ 'font-size': 130 * scaleFactor + '%' });
         svg.selectAll('.x.axis, .logo').attr(translate(0, height));
         svg.select('.x-axis-label').attr(translate(width / 2, height));
+        svg.select('.y-axis-label').attr(translate(0, height / 2));
     }
 
     updateWidth();
