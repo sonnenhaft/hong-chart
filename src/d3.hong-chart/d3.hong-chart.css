@@ -33,21 +33,31 @@ div.tooltip {
     min-width: 36px;
     font: 10px sans-serif;
     background: white;
-    border: 1px solid #E5B951;
+    border: 1px solid #949597;
     box-shadow: 0 0 1px 0 rgba(69, 66, 66, 0.75);
-    border-radius: 2px;
+    border-radius: 10px;
     pointer-events: none;
     opacity: 0;
 }
 
 div.tooltip .content {
-    padding: 3px;
+    color: #949597;
+}
+div.tooltip .content>div{
+    margin: 10px;
 }
 
 div.tooltip .header {
-    padding: 1px 3px;
-    background: #E5B951;
+    padding: 1px 5px;
+    background: #949597;
+    font-size:1.2em;
+    font-weight: 600;
     color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+div.tooltip .color-box{
+    margin-right: 3px;
 }
 
 .opacity-animate {

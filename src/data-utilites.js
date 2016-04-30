@@ -29,6 +29,7 @@ window.DataUtilites = {
                 id: index,
                 style: item.Style,
                 color: item.Color,
+                title: item.Mouseover,
                 width: item.Width,
                 name: item[ key ],
                 ID: item.ID,

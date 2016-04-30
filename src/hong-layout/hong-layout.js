@@ -5,8 +5,8 @@ angular.module('hong-layout', [
         templateUrl: 'src/hong-layout/hong-layout.html',
         link: function ( $scope, $element ) {
             $q.all([
-                'stubs/abatement-measures.csv',
                 'stubs/abatement-measures-v1.csv',
+                'stubs/abatement-measures.csv',
                 'stubs/targets-and-baseline.csv'
             ].map(function ( url ) {
                 return $q(function ( resolve ) { d3.csv(url, resolve); });
