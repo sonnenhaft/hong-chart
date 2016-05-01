@@ -1,7 +1,5 @@
 .idea
 .tmp
-build
-hong-chart.zip
 node_modules
 bower_components
-**/*.css
+src/**/*.css
