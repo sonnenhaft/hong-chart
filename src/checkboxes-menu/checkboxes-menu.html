@@ -8,7 +8,7 @@
         </label>
         <label title="{{chart.title}}">
             <input type="checkbox" ng-model="chart.$selected" ng-change="onUpdate()" ng-disabled="(!$index || $index === data.length - 1) && !yearsShift">
-            <div class="color-box" ng-if="!yearsShift" ng-style="{background: chart.color, visibility: chart.$selected ? 'visible' : 'hidden'}"></div>
+            <div class="color-box" ng-if="chart.color" ng-style="{background: chart.color, visibility: chart.$selected ? 'visible' : 'hidden'}"></div>
             <span class="real-label">{{ chart.name }}</span>
             <select ng-model="chart.$selectedDropDown" ng-change="chart.$selected = true;onUpdate()"
                     ng-if="chart.dropdowns" ng-init="chart.$selectedDropDown = chart.dropdowns[0]"

@@ -38,14 +38,12 @@ angular.module('hc.hong-tooltip', [
                     var sel = selection.$selectedDropDown || selection;
                     var shift = selection.$shiftYear - 2016;
                     return {
+                        color: selection.color,
                         text: selection.name,
                         value: d3.sum(sel.years.slice(0, $scope.year - shift))
                     }
                 });
-                $timeout(function () {
-                    render(data);
-                })
-
+                $timeout(function () {render(data);})
             });
 
             function render( data, opt_noTransition ) {
@@ -62,8 +60,8 @@ angular.module('hc.hong-tooltip', [
                 var xCoord = function ( d, index ) {return x(index);};
                 svg.transition().duration(opt_noTransition ? 0 : 2000).each(function () {
                     svg.select('.rect').attr(translate(x(gap), 0)).bindData('rect', data, {
-                        fill: 'blue',
-                        opacity: 0.3
+                        fill: function(d){return d.color;},
+                        opacity: 0.8
                     }, 'text').attr({
                         x: xCoord,
                         width: x(1) * (1 - gap * 2)
