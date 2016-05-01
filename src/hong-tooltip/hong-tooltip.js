@@ -58,11 +58,11 @@ angular.module('hc.hong-tooltip', [
                     return selection.$selected;
                 }).map(function ( selection ) {
                     var sel = selection.$selectedDropDown || selection;
-                    var shift = selection.$shiftYear - 2016;
+                    var shift = $scope.year - selection.$shiftYear + 2017;
                     return {
                         color: selection.color,
                         text: selection.name,
-                        value: d3.sum(sel.years.slice(0, $scope.year - shift))
+                        value: shift > 0 ? d3.sum(sel.years.slice(0, shift)) : 0
                     };
                 });
                 $timeout(function () {render(data);});
