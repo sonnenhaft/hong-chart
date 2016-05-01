@@ -1,5 +1,5 @@
 <div class="hong-tooltip opacity-animate">
-    <div class="header">Emission trajectory in year {{year + 2016}}</div>
+    <div class="tooltip-header">Emission trajectory in year {{year + 2016}}</div>
     <div class="content">
         <div ng-repeat="chart in charts" ng-class="{bold: chart.$highlight}">
             <div class="color-box" ng-style="{background: chart.color}"></div>
@@ -7,11 +7,12 @@
             <i>{{chart.years[year]}}</i>
         </div>
     </div>
-    <div>
-        <svg>
-            <g class="main">
-                <g class="rect"></g>
+    <svg>
+        <g class="main">
+            <g class="rect"></g>
+            <g transform="translate(0, -2)">
+                <g class="text" fill="black" font-size="8" text-anchor="middle"></g>
             </g>
-        </svg>
-    </div>
+        </g>
+    </svg>
 </div>

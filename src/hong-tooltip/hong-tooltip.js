@@ -1,7 +1,7 @@
 angular.module('hc.hong-tooltip', [
     'hc.d3.bind-data'
-]).directive('hongTooltip', function ( d3, $window , $timeout) {
-    var margin = {top: 2, right: 2, bottom: 2, left: 2};
+]).directive('hongTooltip', function ( d3, $window, $timeout ) {
+    var margin = {top: 12, right: 5, bottom: 0, left: 5};
 
     function translate( x, y ) {return {transform: 'translate(' + x + ',' + y + ')'};}
 
@@ -13,71 +13,82 @@ angular.module('hc.hong-tooltip', [
 
             var x = d3.scale.linear();
             var y = d3.scale.linear();
-            var xAxis = d3.svg.axis().orient('bottom').tickSize(4, 0);
             var currentSvgElement = d3.select($element[0]).select('svg');
             var svg = currentSvgElement.select('.main');
 
             function updateWidth() {
-                var htmlWidth = currentSvgElement[0][0].parentNode.offsetWidth;
+                var htmlWidth = 150; //currentSvgElement[0][0].parentNode.offsetWidth;
+                var height = 35;
                 svg.attr(translate(margin.left, margin.top));
                 var width = htmlWidth - margin.left - margin.right;
-                var height = Math.min(100, width / 2);
                 x.range([0, width]);
                 y.range([height, 0]);
-                xAxis.scale(x);
                 currentSvgElement.attr({
                     width: width + margin.left + margin.right,
                     height: height + margin.top + margin.bottom
                 });
-                svg.selectAll('.x.axis').attr(translate(0, height));
             }
 
+            $scope.$watchGroup(['charts.$version', 'year'], function () {
+                if ( !$scope.abatement ) {return;}
+                var maxLength = $scope.charts[0].years.length;
+                data = $scope.abatement.filter(function ( selection ) {
+                    return selection.$selected;
+                }).map(function ( selection ) {
+                    var sel = selection.$selectedDropDown || selection;
+                    var shift = selection.$shiftYear - 2016;
+                    //console.log(shift)
+                    return {
+                        text: selection.name,
+                        value: d3.sum(sel.years.slice(0, $scope.year - shift))
+                    }
+                });
+                $timeout(function () {
+                    console.log(data)
+                    render(data);
+                })
+
+            });
+
             function render( data, opt_noTransition ) {
-                var maxHeight = (15 * 1.01);
+                if ( !data || !data.length ) {return;}
+                var val = function ( d ) {return d.value};
+                var maxHeight = d3.max(data, val);
+                console.log(maxHeight)
 
                 x.domain([0, data.length]);
-                console.log(data.length)
-                y.domain([0 / 1.01, maxHeight]);
+                y.domain([0, (maxHeight + 1) * 1.1]);
 
-                var height = function ( d ) {return y(d.value);};
-                svg.select('.x.axis').call(xAxis.tickFormat(function ( d ) {return d;}));
+                console.log(y(0))
 
+                var height = function ( d ) { return y(d.value);};
                 var gap = 0.03;
+                var yCoord = function ( d ) {
+                    console.log(y)
+                    return y(maxHeight - d.value)};
+                var xCoord = function ( d, index ) {return x(index);};
                 svg.transition().duration(opt_noTransition ? 0 : 500).each(function () {
 
-                    svg.select('.rect').attr(translate(x(gap),0)).bindData('rect', data, {
+                    svg.select('.rect').attr(translate(x(gap), 0)).bindData('rect', data, {
                         fill: 'blue',
                         opacity: 0.3
-                    }, 'text').transition().attr({
+                    }, 'text').attr({
+                        x: xCoord,
+                        width: x(1) * (1 - gap * 2)
+                    }).transition().attr({
                         height: height,
-                        width: x(1) * (1 - gap*2),
-                        y: function ( d ) {return  y( maxHeight - d.value)},
-                        x: function ( d, index ) {return x(index);}
+                        //y: yCoord
                     });
+
+                    svg.select('.text').attr(translate(x(0.5), 0)).bindData('text', data, {}, 'text').text(function ( d ) {
+                        return d.value;
+                    }).transition().attr({y: yCoord, x: xCoord});
                 });
             }
 
-            var data = [
-                {text: 'do', value: 7},
-                {text: 'du', value: 2},
-                {text: 'de', value: 9},
-                {text: 'ds', value: 9},
-                {text: 'd8', value: 9}
-            ];
+            var data;
 
-            $timeout(function(){
-                updateWidth();
-                render(data)
-            })
-
-
-            function updateWindow() {
-                updateWidth();
-                render(data, true);
-        }
-
-            angular.element($window).on('resize', updateWindow);
-
+            updateWidth();
         }
     };
 });

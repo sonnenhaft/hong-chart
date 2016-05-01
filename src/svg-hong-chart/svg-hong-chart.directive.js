@@ -152,7 +152,7 @@ angular.module('hc.svg-hong-chart', [
 
             updateWidth();
 
-            $scope.$watchGroup(['data', 'data[data.length - 1].version'], function () {
+            $scope.$watchGroup(['data', 'data.$version'], function () {
                 render($scope.data || [], 2016);
             });
 
