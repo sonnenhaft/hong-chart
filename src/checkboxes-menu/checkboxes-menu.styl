@@ -58,6 +58,7 @@ checkboxes-menu {
         max-width: 55%;
     }
     .checkbox {
+        position relative
         padding: 1px 4px;
         lable[title]:hover:after {
             content: attr(title);
@@ -72,6 +73,10 @@ checkboxes-menu {
             box-shadow: 0 0 4px #222;
             background-color: red;
         }
+    }
+    .custom-select {
+        position absolute;
+        right 2px
     }
     .wrapper {
         margin-bottom: 5px;

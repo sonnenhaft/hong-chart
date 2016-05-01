@@ -11,6 +11,7 @@
             <div class="color-box" ng-if="chart.color" ng-style="{background: chart.color, visibility: chart.$selected ? 'visible' : 'hidden'}"></div>
             <span class="real-label">{{ chart.name }}</span>
             <select ng-model="chart.$selectedDropDown" ng-change="chart.$selected = true;onUpdate()"
+                    class="custom-select"
                     ng-if="chart.dropdowns" ng-init="chart.$selectedDropDown = chart.dropdowns[0]"
                     ng-options="option.name for option in chart.dropdowns track by option.id">
             </select>
