@@ -8,7 +8,7 @@ angular.module('hong-layout', [
         templateUrl: 'src/hong-layout/hong-layout.html',
         link: function ( $scope ) {
             $q.all({
-                abatementMeasures: getCsv('stubs/abatement-measures.csv'),
+                abatementMeasures: getCsv('stubs/abatement-measures-v0.csv'),
                 targetsAndBaseLine: getCsv('stubs/targets-and-baseline.csv')
             }).then(function ( csvData ) {
                 return {

@@ -1,0 +1,50 @@
+.hong-layout-block {
+    display: inline-block;
+    width: 50%;
+    min-width: 200px;
+    vertical-align: top;
+    color: #949597;
+    svg {
+        max-width: 100%;
+        font: 10px sans-serif;
+    }
+    img {
+        max-width: 100%;
+    }
+    .header {
+        font-family: Arial, serif;
+        font-size: 18px;
+        font-weight: normal;
+    }
+    .responsive {
+        font-size: 100%
+    }
+    .content {
+        margin-bottom: 5px;
+        font-size: 70%
+    }
+    h1 {
+        font-size: 100%;
+        text-align: center;
+        color: rgb(244, 128, 36);
+        margin: 5px;
+    }
+}
+
+@media only screen and (max-width: 670px) {
+    .hong-layout-block .responsive {
+        font-size: 80%
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .hong-layout-block .responsive {
+        font-size: 60%
+    }
+}
+
+@media only screen and (max-width: 415px) {
+    .hong-layout-block .responsive {
+        font-size: 40%
+    }
+}

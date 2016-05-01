@@ -1,0 +1,69 @@
+[svg-hong-chart] {
+    .axis {
+        path, line {
+            fill: none;
+            stroke: #888887;
+            shape-rendering: crispEdges;
+        }
+        text {
+            fill: #97C37C;
+        }
+    }
+
+    .chart-lines {
+        path {
+            fill: none;
+            opacity: 0.5;
+        }
+        circle {
+            stroke: white;
+            cursor: pointer;
+            transition: r 0.3s ease-out;
+            &.big {
+                r: 9
+            }
+        }
+
+    }
+
+    .bau-reduce-area:hover {
+        opacity: 0.5;
+    }
+
+    div.tooltip {
+        position: absolute;
+        min-width: 36px;
+        font: 10px sans-serif;
+        background: white;
+        border: 1px solid #949597;
+        box-shadow: 0 0 1px 0 rgba(69, 66, 66, 0.75);
+        border-radius: 10px;
+        pointer-events: none;
+        opacity: 0;
+        .content {
+            color: #949597;
+        }
+        .content > div {
+            margin: 10px;
+        }
+
+        .header {
+            padding: 1px 5px;
+            background: #949597;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: white;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .color-box {
+            margin-right: 3px;
+        }
+
+    }
+
+    .opacity-animate {
+        transition: opacity 0.5s ease-out;
+    }
+}

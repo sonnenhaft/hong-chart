@@ -1,87 +1,80 @@
-checkboxes-menu, option, select {
-    font-size: 8px;
+checkboxes-menu,
+option,
+select {
+  font-size: 8px;
 }
-
 checkboxes-menu .checkbox,
 checkboxes-menu label,
 checkboxes-menu label input {
-    cursor: pointer;
-    white-space: nowrap;
-    max-width: 100%;
-    background: #9B9C9F;
-    color: white
+  cursor: pointer;
+  white-space: nowrap;
+  max-width: 100%;
+  background: #9b9c9f;
+  color: #fff;
 }
-
 checkboxes-menu input {
-    vertical-align: middle;
-    margin: 1px 0 0 -1px;
+  vertical-align: middle;
+  margin: 1px 0 0 -1px;
 }
-
-.color-box {
-    width: 6px;
-    height: 10px;
-    display: inline-block;
-    vertical-align: middle;
-    border-radius: 1px;
+checkboxes-menu .color-box {
+  width: 6px;
+  height: 10px;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 1px;
 }
-
-.bold {
-    font-weight: bold;
-    font-size: 110%;
+checkboxes-menu .bold {
+  font-weight: bold;
+  font-size: 110%;
 }
-
-.badge {
-    background: rgb(244,128,36);
-    color: #F2F3F0;
-    border: 1px solid rgb(244,128,36);
-    text-align: center;
-    font-weight: bold;
-    padding: 1px 2px;
+checkboxes-menu .badge {
+  background: #f48024;
+  color: #f2f3f0;
+  border: 1px solid #f48024;
+  text-align: center;
+  font-weight: bold;
+  padding: 1px 2px;
 }
-
-.years-checkbox:after {
-    display: none;
+checkboxes-menu .years-checkbox:after {
+  display: none;
 }
-.years-checkbox {
-    text-align: left;
-    padding: 0;
-    border: none;
-    box-shadow: 0 0 1px 0 rgba(69, 66, 66, 0.75);
-    border-radius: 1px;
-    width: 45px;
+checkboxes-menu .years-checkbox {
+  text-align: left;
+  padding: 0;
+  border: none;
+  box-shadow: 0 0 1px 0 rgba(69,66,66,0.75);
+  border-radius: 1px;
+  width: 45px;
 }
-
-.real-label {
-    line-height: 8px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    display: inline-block;
-    max-width: 100%;
+checkboxes-menu .real-label {
+  line-height: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
 }
-
-checkboxes-menu .wrapper{
-    margin-bottom: 5px;
-    width: 100%;
-    box-shadow: 0 0 1px 1px rgba(152, 152, 152, 0.75);
-    font: 10px Arial, serif;
-    overflow: hidden;
-    border-radius: 10px;
+checkboxes-menu .checkbox {
+  padding: 1px 4px;
 }
-
-.checkbox {
-    padding: 1px 4px;
+checkboxes-menu .checkbox lable[title]:hover:after {
+  content: attr(title);
+  padding: 4px 8px;
+  color: #333;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index: 20;
+  white-space: nowrap;
+  border-radius: 25px;
+  box-shadow: 0 0 4px #222;
+  background-color: #f00;
 }
-.checkbox lable[title]:hover:after {
-    content: attr(title);
-    padding: 4px 8px;
-    color: #333;
-    position: absolute;
-    left: 0;
-    top: 100%;
-    z-index: 20;
-    white-space: nowrap;
-    border-radius: 25px;
-    box-shadow: 0 0 4px #222;
-    background-color: red;
+checkboxes-menu .wrapper {
+  margin-bottom: 5px;
+  width: 100%;
+  box-shadow: 0 0 1px 1px rgba(152,152,152,0.75);
+  font: 10px Arial, serif;
+  overflow: hidden;
+  border-radius: 10px;
 }

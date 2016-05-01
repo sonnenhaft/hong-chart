@@ -6,6 +6,7 @@ angular.module('hc.svg-hong-chart', [
     function translate( x, y ) {return { transform: 'translate(' + x + ',' + y + ')' };}
 
     return {
+        restrict: 'A',
         templateUrl: 'src/svg-hong-chart/svg-hong-chart.html',
         scope: { data: '=svgHongChart' },
         link: function ( $scope, $element ) {
