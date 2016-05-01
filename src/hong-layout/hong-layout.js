@@ -26,26 +26,26 @@ angular.module('hong-layout', [
                 });
 
                 var map = measures.reduce(function ( map, d ) {
-                    map[ d.ID ] = d;
+                    map[d.ID] = d;
                     return map;
                 }, {});
 
                 measures.filter(function ( d ) {
-                    return /\d\.\d\.\d/.test(d.ID)
+                    return /\d\.\d\.\d/.test(d.ID);
                 }).forEach(function ( d ) {
-                    var parent = map[ d.ID.slice(0, 3) ];
+                    var parent = map[d.ID.slice(0, 3)];
                     parent.dropdowns = parent.dropdowns || [];
                     measures.splice(measures.indexOf(d), 1);
                     parent.dropdowns.push(d);
                 });
 
                 $scope.renderChart = function () {
-                    charts[ charts.length - 1 ].version++;
+                    charts[charts.length - 1].version++;
                 };
 
-                var abatementChartCopy = charts[ 0 ].years;
+                var abatementChartCopy = charts[0].years;
                 $scope.applyAbatement = function () {
-                    var abatementChart = charts[ charts.length - 1 ];
+                    var abatementChart = charts[charts.length - 1];
                     abatementChart.years = abatementChartCopy.slice();
                     measures.filter(function ( d ) {
                         return d.$selected;
@@ -55,7 +55,7 @@ angular.module('hong-layout', [
                         abatementChart.years.forEach(function ( year, yearIndex ) {
                             var shiftedYear = yearIndex + $shiftYear;
                             if ( abatementChart.years.length - 1 >= shiftedYear ) {
-                                abatementChart.years[ shiftedYear ] = abatementChart.years[ shiftedYear ] - selection.years[ yearIndex ];
+                                abatementChart.years[shiftedYear] = abatementChart.years[shiftedYear] - selection.years[yearIndex];
                             }
                         });
                     });
@@ -63,10 +63,10 @@ angular.module('hong-layout', [
                 };
 
                 $timeout(function () {
-                    $scope.tooltip = d3.select($element[ 0 ]).select('.hong-tooltip');
+                    $scope.tooltip = d3.select($element[0]).select('.hong-tooltip');
                     $scope.applyAbatement();
                 });
             });
         }
-    }
+    };
 });

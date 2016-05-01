@@ -26,22 +26,22 @@ gulp.task('uglifyCSS', ['$stylus'], function () {
         .pipe(gulp.dest('.tmp'));
 });
 
-gulp.task('inlineSources', [ 'uglifyCSS', 'uglifyJS' ], function () {
+gulp.task('inlineSources', ['uglifyCSS', 'uglifyJS'], function () {
     return gulp.src('./index.html')
         .pipe(require('gulp-processhtml')({
             commentMarker: 'process',
             process: true
         }))
-        .pipe(require('gulp-inline-source')({ compress: false }))
+        .pipe(require('gulp-inline-source')({compress: false}))
         .pipe(gulp.dest('.tmp'));
 });
 
 gulp.task('copy-stubs', function () {
-    return gulp.src([ 'stubs/*.csv', 'src/*.png' ]).pipe(require('gulp-copy')('.tmp'))
+    return gulp.src(['stubs/*.csv', 'src/*.png']).pipe(require('gulp-copy')('.tmp'))
 });
 
-gulp.task('build', [ 'inlineSources' , 'copy-stubs'], function () {
-    return gulp.src([ '.tmp/stubs/*', '.tmp/src/*.png', '.tmp/index.html' ], { base: '.tmp' })
+gulp.task('build', ['inlineSources', 'copy-stubs'], function () {
+    return gulp.src(['.tmp/stubs/*', '.tmp/src/*.png', '.tmp/index.html'], {base: '.tmp'})
         .pipe(require('gulp-zip')('hong-chart.zip'))
         .pipe(gulp.dest('.tmp'));
 });
@@ -52,7 +52,14 @@ gulp.task('$stylus', function () {
         .pipe(gulp.dest('./src/'));
 });
 
-
-gulp.task('$watch-styl',  function () {
+gulp.task('$watch-styl', function () {
     gulp.watch('src/**/*.styl', ['$stylus']);
 });
+
+gulp.task('jshint', function () {
+    var jshint = require('gulp-jshint');
+    return gulp.src('src/**/*.js')
+        .pipe(jshint('./.jshintrc'))
+        .pipe(jshint.reporter('default'))
+});
+

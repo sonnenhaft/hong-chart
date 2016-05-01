@@ -1,12 +1,11 @@
-angular.module('hc.checkboxes-menu', [
-]).directive('checkboxesMenu', function () {
+angular.module('hc.checkboxes-menu', []).directive('checkboxesMenu', function () {
     var SHIFT_YEARS = [];
     for ( var year = 2016; year <= 2030; year++ ) {
         SHIFT_YEARS.push(year);
     }
 
     return {
-        scope: { title: '=', data: '=', onUpdate: '&', yearsShift: '=' },
+        scope: {title: '=', data: '=', onUpdate: '&', yearsShift: '='},
         transclude: true,
         templateUrl: 'src/checkboxes-menu/checkboxes-menu.html',
         link: function ( $scope ) {
@@ -17,9 +16,9 @@ angular.module('hc.checkboxes-menu', [
                 removeWatch();
                 $scope.data.forEach(function ( chart ) {
                     chart.$selected = true;
-                    chart.$shiftYear = SHIFT_YEARS[ 0 ];
+                    chart.$shiftYear = SHIFT_YEARS[0];
                 });
-            })
+            });
         }
     };
 });

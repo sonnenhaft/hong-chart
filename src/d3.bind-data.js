@@ -4,7 +4,7 @@ angular.module('hc.d3.bind-data', []).factory('d3', function ( $window ) {
     d3.selection.prototype.bindData = function ( tag, data, opt_attrs, opt_idKey ) {
         var enteredSelection;
         if ( opt_idKey ) {
-            enteredSelection = this.selectAll(tag).data(data, function ( d ) {return d[ opt_idKey ];});
+            enteredSelection = this.selectAll(tag).data(data, function ( d ) {return d[opt_idKey];});
         } else {
             enteredSelection = this.selectAll(tag).data(data);
         }
