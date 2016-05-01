@@ -1,0 +1,10 @@
+<div class="hong-tooltip opacity-animate">
+    <div class="header">Emission trajectory in year {{year + 2016}}</div>
+    <div class="content">
+        <div ng-repeat="chart in charts" ng-class="{bold: chart.$highlight}">
+            <div class="color-box" ng-style="{background: chart.color}"></div>
+            {{chart.name}}:
+            <i>{{chart.years[year]}}</i>
+        </div>
+    </div>
+</div>

@@ -1,13 +1,3 @@
-<div class="tooltip opacity-animate">
-    <div class="header">Emission trajectory in year {{tooltipIndex + 2016}}</div>
-    <div class="content">
-        <div ng-repeat="chart in data" ng-class="{bold: chart.$highlight}">
-            <div class="color-box" ng-style="{background: chart.color}"></div>
-            {{chart.name}}
-            <i>{{chart.years[tooltipIndex]}}</i>
-        </div>
-    </div>
-</div>
 
 <svg xmlns="http://www.w3.org/2000/svg">
     <defs>

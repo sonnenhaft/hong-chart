@@ -22,35 +22,3 @@
 [svg-hong-chart] .bau-reduce-area:hover {
   opacity: 0.5;
 }
-[svg-hong-chart] div.tooltip {
-  position: absolute;
-  min-width: 36px;
-  font: 10px sans-serif;
-  background: #fff;
-  border: 1px solid #949597;
-  box-shadow: 0 0 1px 0 rgba(69,66,66,0.75);
-  border-radius: 10px;
-  pointer-events: none;
-  opacity: 0;
-}
-[svg-hong-chart] div.tooltip .content {
-  color: #949597;
-}
-[svg-hong-chart] div.tooltip .content > div {
-  margin: 10px;
-}
-[svg-hong-chart] div.tooltip .header {
-  padding: 1px 5px;
-  background: #949597;
-  font-size: 1.2em;
-  font-weight: 600;
-  color: #fff;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-[svg-hong-chart] div.tooltip .color-box {
-  margin-right: 3px;
-}
-[svg-hong-chart] .opacity-animate {
-  transition: opacity 0.5s ease-out;
-}

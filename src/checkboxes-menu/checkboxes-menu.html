@@ -6,8 +6,8 @@
                     ng-options="year for year in shiftYears track by year">
             </select>
         </label>
-        <label title="{{chart.title}}}">
-            <input type="checkbox" ng-model="chart.$selected" ng-change="onUpdate()" ng-disabled="!$index && !yearsShift">
+        <label title="{{chart.title}}">
+            <input type="checkbox" ng-model="chart.$selected" ng-change="onUpdate()" ng-disabled="(!$index || $index === data.length - 1) && !yearsShift">
             <div class="color-box" ng-if="!yearsShift" ng-style="{background: chart.color, visibility: chart.$selected ? 'visible' : 'hidden'}"></div>
             <span class="real-label">{{ chart.name }}</span>
             <select ng-model="chart.$selectedDropDown" ng-change="chart.$selected = true;onUpdate()"

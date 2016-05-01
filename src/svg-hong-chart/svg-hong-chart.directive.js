@@ -1,6 +1,7 @@
 angular.module('hc.svg-hong-chart', [
-    'hc.data-utilites'
-]).directive('svgHongChart', function ( $timeout, DataUtilites, $q, $window ) {
+    'hc.data-utilites',
+    'hc.d3.bind-data'
+]).directive('svgHongChart', function ( DataUtilites, $window, d3 ) {
     var margin = { top: 15, right: 20, bottom: 33, left: 50 };
 
     function translate( x, y ) {return { transform: 'translate(' + x + ',' + y + ')' };}
@@ -8,7 +9,7 @@ angular.module('hc.svg-hong-chart', [
     return {
         restrict: 'A',
         templateUrl: 'src/svg-hong-chart/svg-hong-chart.html',
-        scope: { data: '=svgHongChart' },
+        scope: { data: '=svgHongChart', tooltip: '=', tooltipYear: '=' },
         link: function ( $scope, $element ) {
             var x = d3.scale.linear();
             var y = d3.scale.linear();
@@ -21,9 +22,16 @@ angular.module('hc.svg-hong-chart', [
             var scaleFactor;
 
             $scope.tooltipFn = function ( yearIndex, chartIndex, toShow ) {
-                $scope.tooltipIndex = yearIndex;
-                $scope.data[ chartIndex ].$highlight = toShow;
-                $scope.$digest();
+                $scope.tooltipYear = yearIndex;
+                var indexes = [ chartIndex ];
+                if ( chartIndex === 0 || chartIndex === $scope.data.length - 1 ) {
+                    indexes = [ 0, $scope.data.length - 1 ];
+                }
+                indexes.forEach(function ( chartIndex ) {
+                    $scope.data[ chartIndex ].$highlight = toShow;
+                });
+
+                $scope.$apply();
             };
 
             function updateWidth() {
@@ -50,13 +58,18 @@ angular.module('hc.svg-hong-chart', [
             }
 
             function render( data, opt_offsetArg, opt_noTransition ) {
+                if (data.length < 3)  {return;}
                 var tooltipFn = $scope.tooltipFn;
                 opt_offsetArg = opt_offsetArg || 0;
-                var filteredData = data.filter(function ( d, i ) {return d.$selected;});
+                var filteredData = data.filter(function ( d, index ) {
+                    return index === 0 || index === data.length - 1 || d.$selected;
+                });
                 var yRange = DataUtilites.getYRange(filteredData);
                 var firstChart = data[ 0 ];
                 x.domain([ 0, firstChart.years.length - 1 ]);
-                y.domain([ yRange.min / 1.01, yRange.max * 1.01 ]);
+                /** uncomment if will decided to start axis from min value instead of ziro */
+                    // y.domain([ yRange.min  / 1.01, yRange.max * 1.01 ]);
+                y.domain([ 0 / 1.01, yRange.max * 1.01 ]);
 
                 svg.select('.x.axis').call(xAxis.tickFormat(function ( d ) {return opt_offsetArg + d;}));
                 svg.select('.y.axis').call(yAxis);
@@ -78,7 +91,7 @@ angular.module('hc.svg-hong-chart', [
 
                 function key( k ) {return function ( d ) {return d[ k ];}; }
 
-                var tooltip = d3.select($element[ 0 ]).select('.tooltip');
+                var tooltip = $scope.tooltip;
                 svg.transition().duration(opt_noTransition ? 0 : 500).each(function () {
                     svg.select('.chart-lines').bindData('path', filteredData, {
                         stroke: key('color'),
@@ -93,7 +106,7 @@ angular.module('hc.svg-hong-chart', [
                         'stroke-width': 1
                     }, 'id').bindData('circle', function ( data ) {
                         return cover(data.years);
-                    }).transition().attr({ cx: xCoord, cy: yCoord, r: scaleFactor * 4 });
+                    }).attr({ r: scaleFactor * 4 }).transition().attr({ cx: xCoord, cy: yCoord });
 
                     svg.select('.chart-lines-hover').bindData('g', filteredData, null, 'id').bindData('circle', function ( data ) {
                         return cover(data.years);
@@ -127,17 +140,13 @@ angular.module('hc.svg-hong-chart', [
                     }).attr({ cx: xCoord, cy: yCoord, r: scaleFactor * 12 });
 
                     var lastChart = filteredData[ filteredData.length - 1 ];
-                    if ( lastChart.name === 'BAU + abatement' ) {
-                        svg.select('.bau-reduce-area').attr({ visibility: 'visible' }).transition().attr({
-                            d: d3.svg.area().y0(y).x(function ( d, i ) {
-                                return x(i);
-                            }).y1(function ( d, i ) {
-                                return y(lastChart.years[ i ]);
-                            })(firstChart.years)
-                        });
-                    } else {
-                        svg.select('.bau-reduce-area').attr({ visibility: 'hidden' });
-                    }
+                    svg.select('.bau-reduce-area').attr({ visibility: 'visible' }).transition().attr({
+                        d: d3.svg.area().y0(y).x(function ( d, i ) {
+                            return x(i);
+                        }).y1(function ( d, i ) {
+                            return y(lastChart.years[ i ]);
+                        })(firstChart.years)
+                    });
                 });
             }
 
@@ -149,7 +158,7 @@ angular.module('hc.svg-hong-chart', [
 
             function updateWindow() {
                 updateWidth();
-                render($scope.data, 2016, true);
+                render($scope.data || [], 2016, true);
             }
 
             angular.element($window).on('resize', updateWindow);

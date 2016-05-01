@@ -10,7 +10,7 @@ gulp.task('uglifyJS', function () {
         }))
         .pipe(addsrc.prepend('src/**/*.js'))
         .pipe(require('gulp-ng-annotate')())
-        .pipe(require('gulp-uglify')())
+        //.pipe(require('gulp-uglify')())
         .pipe(addsrc.prepend([
             'bower_components/angular/angular.min.js',
             'bower_components/d3/d3.min.js'
@@ -40,7 +40,7 @@ gulp.task('copy-stubs', function () {
     return gulp.src([ 'stubs/*.csv', 'src/*.png' ]).pipe(require('gulp-copy')('.tmp'))
 });
 
-gulp.task('build', [ 'inlineSources' ], function () {
+gulp.task('build', [ 'inlineSources' , 'copy-stubs'], function () {
     return gulp.src([ '.tmp/stubs/*', '.tmp/src/*.png', '.tmp/index.html' ], { base: '.tmp' })
         .pipe(require('gulp-zip')('hong-chart.zip'))
         .pipe(gulp.dest('.tmp'));

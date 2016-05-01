@@ -1,12 +1,14 @@
 angular.module('hong-layout', [
     'hc.checkboxes-menu',
     'hc.svg-hong-chart',
-    'hc.data-utilites'
-]).directive('hongLayout', function ( $timeout, DataUtilites, $q ) {
+    'hc.data-utilites',
+    'hc.d3.bind-data',
+    'hc.hong-tooltip'
+]).directive('hongLayout', function ( $timeout, DataUtilites, $q, d3 ) {
     var getCsv = function ( url ) {return $q(function ( resolve ) { d3.csv(url, resolve); }); };
     return {
         templateUrl: 'src/hong-layout/hong-layout.html',
-        link: function ( $scope ) {
+        link: function ( $scope, $element ) {
             $q.all({
                 abatementMeasures: getCsv('stubs/abatement-measures-v0.csv'),
                 targetsAndBaseLine: getCsv('stubs/targets-and-baseline.csv')
@@ -61,6 +63,7 @@ angular.module('hong-layout', [
                 };
 
                 $timeout(function () {
+                    $scope.tooltip = d3.select($element[ 0 ]).select('.hong-tooltip');
                     $scope.applyAbatement();
                 });
             });

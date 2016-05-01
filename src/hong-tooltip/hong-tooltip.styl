@@ -1,0 +1,49 @@
+.hong-tooltip {
+    position: absolute;
+    min-width: 36px;
+    font: 10px sans-serif;
+    background: white;
+    border: 1px solid #949597;
+    box-shadow: 0 0 1px 0 rgba(69, 66, 66, 0.75);
+    border-radius: 10px;
+    pointer-events: none;
+    opacity: 0;
+    .content {
+        color: #949597;
+    }
+    .content > div {
+        margin: 5px;
+    }
+
+    .bold {
+        font-weight: bold;
+        font-size: 110%;
+    }
+
+    .header {
+        padding: 1px 5px;
+        background: #949597;
+        font-size: 1.2em;
+        font-weight: 600;
+        color: white;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    .color-box {
+        margin-right: 3px;
+    }
+
+    .color-box {
+        width: 6px;
+        height: 10px;
+        display: inline-block;
+        vertical-align: middle;
+        border-radius: 1px;
+    }
+
+}
+
+.opacity-animate {
+    transition: opacity 0.5s ease-out;
+}
