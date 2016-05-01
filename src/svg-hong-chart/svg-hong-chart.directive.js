@@ -6,6 +6,8 @@ angular.module('hc.svg-hong-chart', [
 
     function translate( x, y ) {return {transform: 'translate(' + x + ',' + y + ')'};}
 
+    function key( k ) {return function ( d ) {return d[k];}; }
+
     return {
         restrict: 'A',
         templateUrl: 'src/svg-hong-chart/svg-hong-chart.html',
@@ -69,7 +71,7 @@ angular.module('hc.svg-hong-chart', [
                 x.domain([0, firstChart.years.length - 1]);
                 /** uncomment if will decided to start axis from min value instead of ziro */
                     // y.domain([ yRange.min  / 1.01, yRange.max * 1.01 ]);
-                y.domain([0 / 1.01, yRange.max * 1.01]);
+                y.domain([0, yRange.max * 1.01]);
 
                 svg.select('.x.axis').call(xAxis.tickFormat(function ( d ) {return opt_offsetArg + d;}));
                 svg.select('.y.axis').call(yAxis);
@@ -88,8 +90,6 @@ angular.module('hc.svg-hong-chart', [
                         }
                     })
                 }
-
-                function key( k ) {return function ( d ) {return d[k];}; }
 
                 var tooltip = $scope.tooltip;
                 svg.transition().duration(opt_noTransition ? 0 : 500).each(function () {
