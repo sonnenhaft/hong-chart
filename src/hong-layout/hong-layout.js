@@ -1,25 +1,27 @@
 angular.module('hong-layout', [
-    'checkboxes-menu'
+    'hc.checkboxes-menu',
+    'hc.svg-hong-chart',
+    'hc.data-utilites'
 ]).directive('hongLayout', function ( $timeout, DataUtilites, $q ) {
+    var getCsv = function ( url ) {return $q(function ( resolve ) { d3.csv(url, resolve); }); };
     return {
         templateUrl: 'src/hong-layout/hong-layout.html',
-        link: function ( $scope, $element ) {
-            $q.all([
-                'stubs/abatement-measures-v1.csv',
-                'stubs/abatement-measures.csv',
-                'stubs/targets-and-baseline.csv'
-            ].map(function ( url ) {
-                return $q(function ( resolve ) { d3.csv(url, resolve); });
-            })).then(function ( array ) {
-                return [
-                    { suffix: 'ReductionYear', key: 'Name' },
-                    { suffix: 'ReductionYear', key: 'Name' },
-                    { key: 'Year' } ].map(function ( mapping, index ) {
-                    return DataUtilites.formatData(array[ index ], mapping.suffix, mapping.key);
+        link: function ( $scope ) {
+            $q.all({
+                abatementMeasures: getCsv('stubs/abatement-measures.csv'),
+                targetsAndBaseLine: getCsv('stubs/targets-and-baseline.csv')
+            }).then(function ( csvData ) {
+                return {
+                    abatementMeasures: DataUtilites.formatData(csvData.abatementMeasures, 'ReductionYear', 'Name'),
+                    targetsAndBaseLine: DataUtilites.formatData(csvData.targetsAndBaseLine, null, 'Year')
+                };
+            }).then(function ( csvData ) {
+                var measures = $scope.abatementMeasures = csvData.abatementMeasures;
+                var charts = $scope.targetsAndBaseLine = csvData.targetsAndBaseLine;
+                charts.forEach(function ( d ) {
+                    d.version = 0;
+                    d.$selected = true;
                 });
-            }).then(function ( data ) {
-                var measures = $scope.abatementMeasures = data[ 0 ];
-                $scope.targetsAndBaseLine = data[ 2 ];
 
                 var map = measures.reduce(function ( map, d ) {
                     map[ d.ID ] = d;
@@ -35,54 +37,33 @@ angular.module('hong-layout', [
                     parent.dropdowns.push(d);
                 });
 
-                var charts = $scope.targetsAndBaseLine;
-                charts.forEach(function ( d ) { d.$selected = true;});
-
-                var hongChart;
                 $scope.renderChart = function () {
-                    hongChart.render(data[ 2 ], 2016);
+                    charts[ charts.length - 1 ].version++;
                 };
 
+                var abatementChartCopy = charts[ 0 ].years;
                 $scope.applyAbatement = function () {
-                    charts.pop();
-                    var otherData = angular.copy(charts[ 0 ]);
-                    otherData.color = 'orange';
-                    otherData.id = -1;
-                    otherData.name = 'BAU + abatement';
-                    charts.push(otherData);
+                    var abatementChart = charts[ charts.length - 1 ];
+                    abatementChart.years = abatementChartCopy.slice();
                     measures.filter(function ( d ) {
                         return d.$selected;
                     }).forEach(function ( selection ) {
                         var $shiftYear = selection.$shiftYear - 2016;
                         selection = selection.$selectedDropDown || selection;
-                        otherData.years.forEach(function ( year, yearIndex ) {
-                            if ( otherData.years.length - 1 >= yearIndex + $shiftYear ) {
-                                year = otherData.years[ yearIndex + $shiftYear ];
-                                otherData.years[ yearIndex + $shiftYear ] = year - selection.years[ yearIndex ];
+                        abatementChart.years.forEach(function ( year, yearIndex ) {
+                            var shiftedYear = yearIndex + $shiftYear;
+                            if ( abatementChart.years.length - 1 >= shiftedYear ) {
+                                abatementChart.years[ shiftedYear ] = abatementChart.years[ shiftedYear ] - selection.years[ yearIndex ];
                             }
                         });
                     });
                     $scope.renderChart();
                 };
-                charts.push([]);
 
                 $timeout(function () {
-                    hongChart = d3.selectAll($element).select('svg').hongChart();
-                    hongChart.setTooltipFn(function ( yearIndex, chartIndex, toShow ) {
-                        $scope.tooltipIndex = yearIndex;
-                        charts[ chartIndex ].$highlight = toShow;
-                        $scope.$digest();
-                    });
                     $scope.applyAbatement();
                 });
-
-                window.onresize = function updateWindow() {
-                    hongChart.updateWidth();
-                    hongChart.render(data[ 2 ], 2016, true);
-                };
             });
         }
     }
-}).factory('DataUtilites', function () {
-    return window.DataUtilites;
 });

@@ -1,4 +1,5 @@
-angular.module('checkboxes-menu', []).directive('checkboxesMenu', function () {
+angular.module('hc.checkboxes-menu', [
+]).directive('checkboxesMenu', function () {
     var SHIFT_YEARS = [];
     for ( var year = 2017; year <= 2030; year++ ) {
         SHIFT_YEARS.push(year);

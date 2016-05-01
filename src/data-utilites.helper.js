@@ -1,4 +1,5 @@
-window.DataUtilites = {
+angular.module('hc.data-utilites', [
+]).value('DataUtilites', {
     _getRange: function ( minMax, value ) {
         if ( value === undefined ) {
             return minMax;
@@ -47,4 +48,4 @@ window.DataUtilites = {
         var range = this._getXRange(data[ 0 ], yearSuffix);
         return data.map(this.itemMapper(range, yearSuffix, key));
     }
-};
+});
