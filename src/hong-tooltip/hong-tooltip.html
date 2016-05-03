@@ -4,7 +4,7 @@
         <div ng-repeat="chart in charts" ng-class="{bold: chart.$highlight}">
             <div class="color-box" ng-style="{background: chart.color}"></div>
             {{chart.name}}:
-            <i>{{chart.years[year]}}</i>
+            <i>{{chart.years[year] | number : 0}}</i>
         </div>
     </div>
     <div style="text-align: center" ng-show="charts[0].$highlight">

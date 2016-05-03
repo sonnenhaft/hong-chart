@@ -46,7 +46,7 @@ angular.module('hc.hong-tooltip', [
                         .transition().attr({ height: height, y: yCoord });
 
                     svg.select('.text').attr(translate(x(0.5), 0)).bindData('text', data, {}, 'text')
-                        .text(function ( d ) { return d.value; }).attr({ x: xCoord })
+                        .text(function ( d ) { return Math.round(d.value); }).attr({ x: xCoord })
                         .transition().attr({ y: yCoord });
                 });
             }
