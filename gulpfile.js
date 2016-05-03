@@ -15,15 +15,15 @@ gulp.task('uglifyJS', function () {
             'bower_components/angular/angular.min.js',
             'bower_components/d3/d3.min.js'
         ]))
-        .pipe(concat('all.js'))
-        .pipe(gulp.dest('.tmp'))
+        .pipe(concat('hong-chart.js'))
+        .pipe(gulp.dest('build'))
 });
 
 gulp.task('uglifyCSS', ['$stylus'], function () {
     return gulp.src('src/**/*.css')
         .pipe(require('gulp-minify-css')())
-        .pipe(concat('all.css'))
-        .pipe(gulp.dest('.tmp'));
+        .pipe(concat('hong-chart.css'))
+        .pipe(gulp.dest('build'));
 });
 
 gulp.task('inlineSources', ['uglifyCSS', 'uglifyJS'], function () {
@@ -33,17 +33,17 @@ gulp.task('inlineSources', ['uglifyCSS', 'uglifyJS'], function () {
             process: true
         }))
         .pipe(require('gulp-inline-source')({compress: false}))
-        .pipe(gulp.dest('.tmp'));
+        .pipe(gulp.dest('build'));
 });
 
 gulp.task('copy-stubs', function () {
-    return gulp.src(['stubs/*.csv', 'src/*.png']).pipe(require('gulp-copy')('.tmp'))
+    return gulp.src(['stubs/*.csv', 'src/*.png']).pipe(require('gulp-copy')('build'))
 });
 
 gulp.task('build', ['inlineSources', 'copy-stubs'], function () {
-    return gulp.src(['.tmp/stubs/*', '.tmp/src/*.png', '.tmp/index.html'], {base: '.tmp'})
+    return gulp.src(['build/stubs/*', 'build/src/*.png', 'build/index.html'], {base: 'build'})
         .pipe(require('gulp-zip')('hong-chart.zip'))
-        .pipe(gulp.dest('.tmp'));
+        .pipe(gulp.dest('build'));
 });
 
 gulp.task('$stylus', function () {
