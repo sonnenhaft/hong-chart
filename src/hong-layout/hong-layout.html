@@ -4,26 +4,25 @@
         <div class="header">
             <div class="responsive">
                 <h1>Meeting Australia’s 2030 emissions reduction target</h1>
-
                 <div class="content">
-                    To understand the task ahead for Australia to meet our target and reduce greenhouse
-                    emissions by 28% below 2005 levels, Energetics has modelled a range of measures
-                    that can be pursued under the Federal Government’s current suite of policies, and also
-                    potential, future policy initiatives. Our interactive chart shows the size of the reductions
-                    that can be delivered in the years through to 2030
+                    To understand the task ahead for Australia to meet our target
+                    and reduce greenhouse emissions by 28% below 2005 levels,
+                    Energetics has modelled a range of measures that can be pursued
+                    under the Federal Government’s current suite of policies, and also
+                    potential, future policy initiatives
                 </div>
             </div>
         </div>
         <div svg-hong-chart="targetsAndBaseLine" tooltip="tooltip" tooltip-year="year"></div>
     </div>
     <div class="hong-layout-block menu">
+        <img src="src/energetics-ball-logo.png" alt="log" title="logo" style="max-width: 100%">
         <checkboxes-menu data="targetsAndBaseLine" on-update="renderChart()">
-            BAU Chart
+            Emission trajectories
         </checkboxes-menu>
 
         <checkboxes-menu data="abatementMeasures" on-update="applyAbatement()" years-shift="true">
-            Abatement Measures
+            Abatement measures
         </checkboxes-menu>
-        <img src="src/energetics-ball-logo.png" alt="log" title="logo" style="max-width: 100%">
     </div>
 </div>

@@ -61,7 +61,7 @@ angular.module('hong-layout', [
                         abatementChart.years.forEach(function ( year, yearIndex ) {
                             var shiftedYear = yearIndex + $shiftYear;
                             if ( abatementChart.years.length - 1 >= shiftedYear && selection.years.length - 1 >= yearIndex ) {
-                                abatementChart.years[ shiftedYear ] = abatementChart.years[ shiftedYear ] - selection.years[ yearIndex ];
+                                abatementChart.years[ shiftedYear ] -=  selection.years[ yearIndex ];
                             }
                         });
                     });

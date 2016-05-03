@@ -1,93 +1,95 @@
 checkboxes-menu, option, select {
-  font-size: 8px;
+    font-size: 8px;
 }
 
 checkboxes-menu {
-  .checkbox, label, label input {
-    cursor: pointer;
-    white-space: nowrap;
-    max-width: 100%;
-    background: #9B9C9F;
-    color: white
-  }
-  input {
-    vertical-align: middle;
-    margin: 1px 0 0 -1px;
-  }
-  .color-box {
-    width: 6px;
-    height: 10px;
-    display: inline-block;
-    vertical-align: middle;
-    border-radius: 1px;
-  }
-
-  .bold {
-    font-weight: bold;
-    font-size: 110%;
-  }
-
-  .badge {
-    background: rgb(244, 128, 36);
-    color: #F2F3F0;
-    border: 1px solid rgb(244, 128, 36);
-    text-align: center;
-    font-weight: bold;
-    padding: 1px 2px;
-  }
-
-  .years-checkbox:after {
-    display: none;
-  }
-
-  .years-checkbox {
-    text-align: left;
-    padding: 0;
-    border: none;
-    box-shadow: 0 0 1px 0 rgba(69, 66, 66, 0.75);
-    border-radius: 1px;
-    width: 45px;
-  }
-
-  .real-label {
-    line-height: 8px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    display: inline-block;
-    max-width: 55%;
-  }
-  .checkbox {
-    position relative
-    padding: 1px 4px;
-    lable[title]:hover:after {
-      content: attr(title);
-      padding: 4px 8px;
-      color: #333;
-      position: absolute;
-      left: 0;
-      top: 100%;
-      z-index: 20;
-      white-space: nowrap;
-      border-radius: 25px;
-      box-shadow: 0 0 4px #222;
-      background-color: red;
+    .checkbox, label, label input {
+        cursor: pointer;
+        white-space: nowrap;
+        max-width: 100%;
+        background: #9B9C9F;
+        vertical-align middle
+        color: white
     }
-  }
-  .custom-select {
-    position absolute;
-    right 2px
-  }
-  .wrapper {
-    margin-bottom: 5px;
-    width: 100%;
-    box-shadow: 0 0 1px 1px rgba(152, 152, 152, 0.75);
-    font: 10px Arial, serif;
-    overflow: hidden;
-    border-radius: 10px;
-  }
-  .max-height-limit {
-    max-height 170px
-    overflow-y auto
-  }
+    input {
+        vertical-align: middle;
+        margin: 1px 0 0 -1px;
+    }
+    .color-box {
+        width: 6px;
+        height: 12px;
+        display: inline-block;
+        vertical-align: middle;
+        border-radius: 1px;
+    }
+
+    .bold {
+        font-weight: bold;
+        font-size: 110%;
+    }
+
+    .badge {
+        background: rgb(244, 128, 36);
+        color: #F2F3F0;
+        border: 1px solid rgb(244, 128, 36);
+        text-align: center;
+        font-weight: bold;
+        padding: 1px 2px;
+    }
+
+    .years-checkbox:after {
+        display: none;
+    }
+
+    .years-checkbox {
+        text-align: left;
+        padding: 0;
+        border: none;
+        box-shadow: 0 0 1px 0 rgba(69, 66, 66, 0.75);
+        border-radius: 1px;
+        width: 45px;
+    }
+
+    .real-label {
+        line-height: 16px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        display: inline-block;
+        vertical-align middle
+        max-width: 190px;
+    }
+    .checkbox {
+        position relative
+        padding: 1px 4px;
+        lable[title]:hover:after {
+            content: attr(title);
+            padding: 4px 8px;
+            color: #333;
+            position: absolute;
+            left: 0;
+            top: 100%;
+            z-index: 20;
+            white-space: nowrap;
+            border-radius: 25px;
+            box-shadow: 0 0 4px #222;
+            background-color: red;
+        }
+    }
+    .custom-select {
+        position absolute;
+        right 2px
+    }
+    .wrapper {
+        margin-bottom: 5px;
+        width: 100%;
+        box-shadow: 0 0 1px 1px rgba(152, 152, 152, 0.75);
+        font: 10px Arial, serif;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+    .max-height-limit {
+        max-height 125px
+        overflow-y auto
+    }
 }

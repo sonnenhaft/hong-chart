@@ -2,7 +2,7 @@ angular.module('hc.svg-hong-chart', [
     'hc.data-utilites',
     'hc.d3.bind-data'
 ]).directive('svgHongChart', function ( DataUtilites, $window, d3 ) {
-    var margin = { top: 15, right: 20, bottom: 33, left: 50 };
+    var margin = { top: 15, right: 20, bottom: 36, left: 55 };
 
     function translate( x, y ) {return { transform: 'translate(' + x + ',' + y + ')' };}
 
@@ -16,7 +16,9 @@ angular.module('hc.svg-hong-chart', [
             var x = d3.scale.linear();
             var y = d3.scale.linear();
             var xAxis = d3.svg.axis().orient('bottom').tickSize(4, 0);
-            var yAxis = d3.svg.axis().orient('left').tickSize(4, 0);
+            var yAxis = d3.svg.axis().orient('left').tickSize(4, 0).tickValues([
+                100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200
+            ]);
 
             var currentSvgElement = d3.select($element[ 0 ]).select('svg');
             var svg = currentSvgElement.select('.main');
@@ -63,9 +65,7 @@ angular.module('hc.svg-hong-chart', [
                 if ( data.length < 3 ) {return;}
                 var tooltipFn = $scope.tooltipFn;
                 opt_offsetArg = opt_offsetArg || 0;
-                var filteredData = data.filter(function ( d, index ) {
-                    return index === 0 || index === data.length - 1 || d.$selected;
-                });
+                var filteredData = data;
                 var yRange = DataUtilites.getYRange(filteredData);
                 var firstChart = data[ 0 ];
                 x.domain([ 0, firstChart.years.length - 1 ]);
@@ -91,6 +91,8 @@ angular.module('hc.svg-hong-chart', [
                     });
                 }
 
+                var visibiliy = { visibility: function ( d ) {return d.$selected ? 'visiblie' : 'hidden'} };
+
                 var tooltip = $scope.tooltip;
                 svg.transition().duration(opt_noTransition ? 0 : 500).each(function () {
                     svg.select('.chart-lines').bindData('path', filteredData, {
@@ -99,12 +101,12 @@ angular.module('hc.svg-hong-chart', [
                             return d.style === 'dashed' ? '10,3' : 0;
                         },
                         'stroke-width': key('width')
-                    }, 'id').transition().attr({ d: function ( chart ) {return line(cover(chart.years));} });
+                    }, 'id').attr(visibiliy).transition().attr({ d: function ( chart ) {return line(cover(chart.years));} });
 
                     svg.select('.chart-lines').bindData('g', filteredData, {
                         fill: key('color'),
                         'stroke-width': 1
-                    }, 'id').bindData('circle', function ( data ) {
+                    }, 'id').attr(visibiliy).bindData('circle', function ( data ) {
                         return cover(data.years);
                     }).attr({ r: scaleFactor * 4 }).transition().attr({ cx: xCoord, cy: yCoord });
 
@@ -140,7 +142,8 @@ angular.module('hc.svg-hong-chart', [
                     }).attr({ cx: xCoord, cy: yCoord, r: scaleFactor * 12 });
 
                     var lastChart = filteredData[ filteredData.length - 1 ];
-                    svg.select('.bau-reduce-area').attr({ visibility: 'visible' }).transition().attr({
+                    svg.select('.bau-reduce-area').transition().attr({
+                        visibility: lastChart.$selected && filteredData[ 0 ].$selected ? 'visible' : 'hidden',
                         d: d3.svg.area().y0(y).x(function ( d, i ) {
                             return x(i);
                         }).y1(function ( d, i ) {
@@ -165,7 +168,6 @@ angular.module('hc.svg-hong-chart', [
             $scope.$on('$destroy', function () {
                 angular.element($window).unbind('resize', updateWindow);
             });
-
         }
     };
 });
