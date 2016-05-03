@@ -11,7 +11,7 @@ angular.module('hong-layout', [
         link: function ( $scope, $element ) {
             $q.all({
                 abatementMeasures: getCsv('stubs/AbatementMeasures_v4.csv'),
-                targetsAndBaseLine: getCsv('stubs/targets-and-baseline.csv')
+                targetsAndBaseLine: getCsv('stubs/TargetsAndBaseline_v1.csv')
             }).then(function ( csvData ) {
                 return {
                     abatementMeasures: DataUtilites.formatData(csvData.abatementMeasures, 'ReductionYear', 'Name'),
@@ -27,19 +27,19 @@ angular.module('hong-layout', [
                 });
 
                 var map = measures.reduce(function ( map, d ) {
-                    map[d.ID] = d;
+                    map[ d.ID ] = d;
                     return map;
                 }, {});
 
-                measures.filter(function ( measure) {
+                measures.filter(function ( measure ) {
                     return measure.isDropdown;
                 }).forEach(function ( dropdownMeasure ) {
-                    var parent = map[dropdownMeasure.ID.slice(0, dropdownMeasure.ID.indexOf('.'))];
+                    var parent = map[ dropdownMeasure.ID.slice(0, dropdownMeasure.ID.indexOf('.')) ];
                     measures.splice(measures.indexOf(dropdownMeasure), 1);
                     parent.dropdowns = parent.dropdowns || [];
                     parent.dropdowns.push(dropdownMeasure);
-                    if (parent.dropdowns.length === 1) {
-                        parent.$selectedDropDown = parent.dropdowns[0];
+                    if ( parent.dropdowns.length === 1 ) {
+                        parent.$selectedDropDown = parent.dropdowns[ 0 ];
                     }
                 });
 
@@ -48,9 +48,10 @@ angular.module('hong-layout', [
                     measures.$version++;
                 };
 
-                var abatementChartCopy = charts[0].years;
+                var abatementChartCopy = charts[ 0 ].years;
+                charts[ charts.length - 1 ].years = abatementChartCopy.slice();
                 $scope.applyAbatement = function () {
-                    var abatementChart = charts[charts.length - 1];
+                    var abatementChart = charts[ charts.length - 1 ];
                     abatementChart.years = abatementChartCopy.slice();
                     measures.filter(function ( measure ) {
                         return measure.$selected;
@@ -59,8 +60,8 @@ angular.module('hong-layout', [
                         selection = selection.dropdowns ? selection.$selectedDropDown : selection;
                         abatementChart.years.forEach(function ( year, yearIndex ) {
                             var shiftedYear = yearIndex + $shiftYear;
-                            if ( abatementChart.years.length - 1 >= shiftedYear && selection.years.length -1 >= yearIndex ) {
-                                abatementChart.years[shiftedYear] = abatementChart.years[shiftedYear] - selection.years[yearIndex];
+                            if ( abatementChart.years.length - 1 >= shiftedYear && selection.years.length - 1 >= yearIndex ) {
+                                abatementChart.years[ shiftedYear ] = abatementChart.years[ shiftedYear ] - selection.years[ yearIndex ];
                             }
                         });
                     });
@@ -68,7 +69,7 @@ angular.module('hong-layout', [
                 };
 
                 $timeout(function () {
-                    $scope.tooltip = d3.select($element[0]).select('.hong-tooltip');
+                    $scope.tooltip = d3.select($element[ 0 ]).select('.hong-tooltip');
                     $scope.applyAbatement();
                 });
             });
