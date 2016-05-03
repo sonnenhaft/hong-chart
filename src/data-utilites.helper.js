@@ -42,6 +42,7 @@ angular.module('hc.data-utilites', []).value('DataUtilites', {
                 title: item.Mouseover,
                 width: item.Width,
                 name: item[ key ],
+                shortName: item.ShortName,
                 isDropdown: item.Type === 'dropdown',
                 ID: item.ID,
                 years: years

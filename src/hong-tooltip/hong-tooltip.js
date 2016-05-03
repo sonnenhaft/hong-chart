@@ -12,8 +12,8 @@ angular.module('hc.hong-tooltip', [
         link: function ( $scope, $element ) {
             var x = d3.scale.linear();
             var y = d3.scale.linear();
-            var currentSvgElement = d3.select($element[ 0 ]).select('svg');
-            var svg = currentSvgElement.select('.main');
+            var currentSvgElement = d3.select($element[ 0 ]).selectAll('svg');
+            var svg = currentSvgElement.selectAll('.main');
 
             var htmlWidth = 200; //currentSvgElement[0][0].parentNode.offsetWidth;
             var height = 35;
@@ -25,6 +25,7 @@ angular.module('hc.hong-tooltip', [
                 width: width + margin.left + margin.right,
                 height: height + margin.top + margin.bottom
             });
+            d3.select($element[ 0 ]).select('.under-chart svg').attr({ height: 250 });
 
             function render( data, opt_noTransition ) {
                 if ( !data || !data.length ) {return;}
@@ -38,7 +39,7 @@ angular.module('hc.hong-tooltip', [
                 var gap = 0.03;
                 var yCoord = function ( d ) {return y(maxYValue - d.value);};
                 var xCoord = function ( d, index ) {return x(index);};
-                svg.transition().duration(opt_noTransition ? 0 : 2000).each(function () {
+                svg.transition().duration(opt_noTransition ? 0 : 0).each(function () {
                     svg.select('.rect').attr(translate(x(gap), 0)).bindData('rect', data, {
                         fill: function ( d ) {return d.color;},
                         opacity: 0.8
@@ -48,6 +49,14 @@ angular.module('hc.hong-tooltip', [
                     svg.select('.text').attr(translate(x(0.5), 0)).bindData('text', data, {}, 'text')
                         .text(function ( d ) { return Math.round(d.value); }).attr({ x: xCoord })
                         .transition().attr({ y: yCoord });
+
+                    svg.select('.text-under').attr(translate(x(0.5 + 0.25), 0)).bindData('text', data, {}, 'text')
+                        .text(function ( d ) { return d.shortName }).attr({
+                        x: xCoord,
+                        transform: function ( d, i ) {
+                            return 'rotate(-90,' + xCoord(d, i) + ',0)'
+                        }
+                    })
                 });
             }
 
@@ -62,6 +71,7 @@ angular.module('hc.hong-tooltip', [
                     return {
                         color: selection.color,
                         text: selection.name,
+                        shortName: sel.shortName,
                         value: shift > 0 ? d3.sum(sel.years.slice(0, shift)) : 0
                     };
                 });
