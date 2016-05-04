@@ -112,11 +112,17 @@ angular.module('hc.svg-hong-chart', [
 
                     svg.select('.chart-lines-hover').bindData('g', filteredData, null, 'id').bindData('circle', function ( data ) {
                         return cover(data.years);
-                    }).on({
-                        mouseenter: function ( d, yearIndex, currentChartIndex ) {
-                            tooltipFn(yearIndex, currentChartIndex, true);
+                    }).attr({ cx: xCoord, cy: yCoord, r: scaleFactor * 20 }).on({
+                        mouseenter: function ( d, yearIndex, chartIndex ) {
+                            tooltipFn(yearIndex, chartIndex, true);
+                            var currentLine = svg.selectAll('.chart-lines path:nth-child(' + (chartIndex + 1) + ')');
+                            currentLine.attr({
+                                'old-stroke': currentLine.attr('stroke-width'),
+                                'stroke-width': 3
+                            });
+
                             var circles = svg.selectAll('.chart-lines g circle:nth-child(' + (yearIndex + 1) + ')').attr({ r: scaleFactor * 6 });
-                            var circle = d3.select(circles[ 0 ][ currentChartIndex ]).classed({ big: true });
+                            var circle = d3.select(circles[ 0 ][ chartIndex ]).classed({ big: true });
                             var x = circle.attr('cx');
                             var y = circle.attr('cy');
                             var targetLines = svg.select('.target-lines').attr({ opacity: 0.2 });
@@ -131,6 +137,8 @@ angular.module('hc.svg-hong-chart', [
                         },
                         mouseleave: function ( d, yearIndex, chartIndex ) {
                             tooltipFn(yearIndex, chartIndex, false);
+                            var currentLine = svg.selectAll('.chart-lines path:nth-child(' + (chartIndex + 1) + ')');
+                            currentLine.attr('stroke-width', currentLine.attr('old-stroke-width'));
                             svg.selectAll('.chart-lines g')[ 0 ].forEach(function ( d ) {
                                 d3.select(d3.select(d).selectAll('circle')[ 0 ][ yearIndex ]).attr({ r: scaleFactor * 4 }).classed({
                                     big: false
@@ -139,10 +147,21 @@ angular.module('hc.svg-hong-chart', [
                             svg.select('.target-lines').attr({ opacity: 0 });
                             tooltip.style('opacity', 0);
                         }
-                    }).attr({ cx: xCoord, cy: yCoord, r: scaleFactor * 12 });
+                    });
 
                     var lastChart = filteredData[ filteredData.length - 1 ];
-                    svg.select('.bau-reduce-area').transition().attr({
+                    svg.select('.bau-reduce-area').on({
+                        mousemove: function ( ) {
+                            tooltip.style({
+                                opacity: 0.9,
+                                left: (d3.event.pageX + 10) + 'px',
+                                top: (d3.event.pageY - 28) + 'px'
+                            });
+                        },
+                        mouseleave: function(){
+                            tooltip.style({opacity: 0});
+                        }
+                    }).transition().attr({
                         fill: 'rgb(248,167,107)',
                         visibility: lastChart.$selected && filteredData[ 0 ].$selected ? 'visible' : 'hidden',
                         opacity: '0.2',
