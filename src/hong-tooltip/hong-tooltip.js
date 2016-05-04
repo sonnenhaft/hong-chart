@@ -15,7 +15,7 @@ angular.module('hc.hong-tooltip', [
             var currentSvgElement = d3.select($element[ 0 ]).selectAll('svg');
             var svg = currentSvgElement.selectAll('.main');
 
-            var htmlWidth = 200; //currentSvgElement[0][0].parentNode.offsetWidth;
+            var htmlWidth = 250; //currentSvgElement[0][0].parentNode.offsetWidth;
             var height = 35;
             svg.attr(translate(margin.left, margin.top));
             var width = htmlWidth - margin.left - margin.right;
