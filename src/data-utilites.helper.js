@@ -38,7 +38,7 @@ angular.module('hc.data-utilites', []).value('DataUtilites', {
             return {
                 id: index,
                 style: item.Style,
-                color: item.Color || colors[ index ],
+                color: item.Colour,
                 title: item.Mouseover,
                 width: item.Width,
                 name: item[ key ],
