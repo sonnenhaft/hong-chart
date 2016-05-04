@@ -19,41 +19,44 @@ gulp.task('uglifyJS', function () {
         .pipe(gulp.dest('build'))
 });
 
-gulp.task('uglifyCSS', ['$stylus'], function () {
+gulp.task('uglifyCSS', [ '$stylus' ], function () {
     return gulp.src('src/**/*.css')
         .pipe(require('gulp-minify-css')())
         .pipe(concat('hong-chart.css'))
         .pipe(gulp.dest('build'));
 });
 
-gulp.task('inlineSources', ['uglifyCSS', 'uglifyJS'], function () {
+gulp.task('inlineSources', [ 'uglifyCSS', 'uglifyJS' ], function () {
     return gulp.src('./index.html')
         .pipe(require('gulp-processhtml')({
             commentMarker: 'process',
             process: true
         }))
-        .pipe(require('gulp-inline-source')({compress: false}))
+        .pipe(require('gulp-inline-source')({ compress: false }))
         .pipe(gulp.dest('build'));
 });
 
 gulp.task('copy-stubs', function () {
-    return gulp.src(['stubs/*.csv', 'src/*.png']).pipe(require('gulp-copy')('build'))
+    return gulp.src([ 'stubs/*.csv', 'src/*.png' ]).pipe(require('gulp-copy')('build'))
 });
 
-gulp.task('build', ['inlineSources', 'copy-stubs'], function () {
-    return gulp.src(['build/stubs/*', 'build/src/*.png', 'build/index.html'], {base: 'build'})
+gulp.task('build', [ 'inlineSources', 'copy-stubs' ], function () {
+    return gulp.src([ 'build/stubs/*', 'build/src/*.png', 'build/index.html' ], { base: 'build' })
         .pipe(require('gulp-zip')('hong-chart.zip'))
         .pipe(gulp.dest('build'));
 });
 
 gulp.task('$stylus', function () {
+    var sourcemaps = require('gulp-sourcemaps');
     return gulp.src('src/**/*.styl')
+        .pipe(sourcemaps.init())
         .pipe(require('gulp-stylus')())
+            .pipe(sourcemaps.write('../build/maps', { addComment: true }))
         .pipe(gulp.dest('./src/'));
 });
 
 gulp.task('$watch-styl', function () {
-    gulp.watch('src/**/*.styl', ['$stylus']);
+    gulp.watch('src/**/*.styl', [ '$stylus' ]);
 });
 
 gulp.task('jshint', function () {
