@@ -1,5 +1,8 @@
 checkboxes-menu {
   font: 12px Arial, serif;
+  select {
+    font-size 11px
+  }
 
   .color-box,
   .checkbox, label,
@@ -13,7 +16,6 @@ checkboxes-menu {
     cursor: pointer;
     white-space: nowrap;
     max-width: 100%;
-    background: #9B9C9F;
     color: white
   }
 
@@ -58,10 +60,7 @@ checkboxes-menu {
     line-height: 16px;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
     display: inline-block;
-    max-width: 190px;
-    font-size 110%
   }
   .checkbox {
     position relative
@@ -80,19 +79,17 @@ checkboxes-menu {
       background-color: red;
     }
   }
-  .custom-select {
-    position absolute;
-    right 2px
-  }
+
   .wrapper {
     margin-bottom: 5px;
     width: 100%;
     box-shadow: 0 0 1px 1px rgba(152, 152, 152, 0.75);
+    background: #9B9C9F;
     overflow: hidden;
     border-radius: 10px;
   }
   .max-height-limit {
-    max-height 125px
+    max-height: 230px;
     overflow-y auto
   }
 }

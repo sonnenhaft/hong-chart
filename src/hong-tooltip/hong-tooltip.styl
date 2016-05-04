@@ -1,57 +1,55 @@
 .hong-tooltip {
-    //position relative
-    position: absolute;
-    z-index: 1;
-    min-width: 36px;
-    font: 12px sans-serif;
-    background: white;
-    border: 1px solid #949597;
-    box-shadow: 0 0 1px 0 rgba(69, 66, 66, 0.75);
-    border-radius: 10px;
-    pointer-events: none;
-    opacity: 0;
-    //opacity 1 !important;
-    .content {
-        color: #949597;
-    }
-    .content > div {
-        margin: 3px;
-    }
+  position: absolute;
+  opacity: 0;
+  //position relative
+  //opacity 1 !important;
+  z-index: 1;
+  min-width: 36px;
+  font: 12px sans-serif;
+  background: white;
+  border: 1px solid #949597;
+  box-shadow: 0 0 1px 0 rgba(69, 66, 66, 0.75);
+  border-radius: 10px;
+  pointer-events: none;
 
-    .bold {
-        font-weight: bold;
-    }
+  .content {
+    color: #949597;
+  }
+  .content > div {
+    margin: 2px 0 0 5px;
+  }
 
-    .tooltip-header {
-        padding: 1px 5px;
-        background: #949597;
-        font-size 14px
-        font-weight: 600;
-        color: white;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-    }
+  .bold {
+    font-weight: bold;
+  }
 
-    .color-box {
-        margin-right: 3px;
-    }
+  .tooltip-header {
+    padding: 1px 5px;
+    background: #949597;
+    font-size 14px
+    font-weight: 600;
+    color: white;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
 
-    .color-box {
-        width: 6px;
-        height: 10px;
-        display: inline-block;
-        vertical-align: middle;
-        border-radius: 1px;
-    }
-    .under-chart {
-        position absolute
-        bottom: -250px;
-        text-align center
-        left 0;
-        right 0
-    }
+  .color-box {
+    margin-right: 3px;
+  }
+
+  .color-box {
+    width: 6px;
+    height: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 1px;
+  }
+  .under-chart {
+    text-align center;
+    margin-top: -8px
+  }
 }
 
 .opacity-animate {
-    transition: opacity 0.5s ease-out;
+  transition: opacity 0.5s ease-out;
 }

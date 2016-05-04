@@ -58,7 +58,7 @@ angular.module('hc.svg-hong-chart', [
                 svg.attr({ 'font-size': 130 * scaleFactor + '%' });
                 svg.selectAll('.x.axis, .logo').attr(translate(0, height));
                 svg.select('.x-axis-label').attr(translate(width / 2, height));
-                svg.select('.y-axis-label').attr(translate(0, height / 2));
+                svg.select('.y-axis-label').attr(translate(0, height / 2 + 10));
             }
 
             function render( data, opt_offsetArg, opt_noTransition ) {
@@ -143,7 +143,9 @@ angular.module('hc.svg-hong-chart', [
 
                     var lastChart = filteredData[ filteredData.length - 1 ];
                     svg.select('.bau-reduce-area').transition().attr({
+                        fill: 'rgb(248,167,107)',
                         visibility: lastChart.$selected && filteredData[ 0 ].$selected ? 'visible' : 'hidden',
+                        opacity: '0.2',
                         d: d3.svg.area().y0(y).x(function ( d, i ) {
                             return x(i);
                         }).y1(function ( d, i ) {

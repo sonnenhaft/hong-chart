@@ -25,7 +25,7 @@ angular.module('hc.hong-tooltip', [
                 width: width + margin.left + margin.right,
                 height: height + margin.top + margin.bottom
             });
-            d3.select($element[ 0 ]).select('.under-chart svg').attr({ height: 250 });
+            d3.select($element[ 0 ]).select('.under-chart svg').attr({ height: 70 });
 
             function render( data, opt_noTransition ) {
                 if ( !data || !data.length ) {return;}
