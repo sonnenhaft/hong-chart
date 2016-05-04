@@ -18,16 +18,7 @@ angular.module('hc.data-utilites', []).value('DataUtilites', {
             return !isNaN(year);
         }).reduce(this._getRange, { min: 9999, max: 0 });
     },
-    COLORS: [ '#D1BD8C', '#B7BF54', '#488652', '#CC6B67', '#8BC669', '#91547F', '#D47DA3', '#D87D45',
-        '#81D4FA', '#4FC3F7', '#29B6F6', '#03A9F4',
-        '#039BE5', '#0288D1', '#0277BD', '#01579B',
-        '#80D8FF', '#40C4FF', '#00B0FF', '#0091EA',
-        '#00BCD4', '#E0F7FA', '#B2EBF2', '#80DEEA',
-        '#4DD0E1', '#26C6DA', '#00BCD4', '#00ACC1',
-        '#0097A7', '#00838F', '#006064', '#84FFFF'
-    ],
     itemMapper: function ( range, yearSuffix, key ) {
-        var colors = this.COLORS;
         return function ( item, index ) {
             var years = [];
             for ( var year = range.min; year <= range.max; year++ ) {
