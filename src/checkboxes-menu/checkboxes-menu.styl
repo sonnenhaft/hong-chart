@@ -1,95 +1,112 @@
 checkboxes-menu {
-  font: 12px Arial, serif;
-  select {
-    font-size 11px
-  }
-
-  .color-box,
-  .checkbox, label,
-  label input,
-  .real-label,
-  select,
-  input {
-    vertical-align middle
-  }
-  .checkbox, label, label input {
-    cursor: pointer;
-    white-space: nowrap;
-    max-width: 100%;
-    color: white
-  }
-
-  input {
-    margin: 1px 0 0 -1px;
-  }
-  .color-box {
-    width: 6px;
-    height: 12px;
-    display: inline-block;
-    border-radius: 1px;
-  }
-
-  .bold {
-    font-weight: bold;
-  }
-
-  .badge {
-    background: rgb(244, 128, 36);
-    color: #F2F3F0;
-    border: 1px solid rgb(244, 128, 36);
-    text-align: center;
-    font-weight: bold;
-    padding: 2px;
-    font-size 120%
-  }
-
-  .years-checkbox:after {
-    display: none;
-  }
-
-  .years-checkbox {
-    text-align: left;
-    padding: 0;
-    border: none;
-    box-shadow: 0 0 1px 0 rgba(69, 66, 66, 0.75);
-    border-radius: 1px;
-    width: 50px;
-  }
-
-  .real-label {
-    line-height: 16px;
-    overflow: hidden;
-    white-space: nowrap;
-    display: inline-block;
-  }
-  .checkbox {
-    position relative
-    padding: 1px 4px;
-    lable[title]:hover:after {
-      content: attr(title);
-      padding: 4px 8px;
-      color: #333;
-      position: absolute;
-      left: 0;
-      top: 100%;
-      z-index: 20;
-      white-space: nowrap;
-      border-radius: 25px;
-      box-shadow: 0 0 4px #222;
-      background-color: red;
+    font: 12px Arial, serif;
+    select {
+        font-size 11px
     }
-  }
 
-  .wrapper {
-    margin-bottom: 5px;
-    width: 100%;
-    box-shadow: 0 0 1px 1px rgba(152, 152, 152, 0.75);
-    background: #9B9C9F;
-    overflow: hidden;
-    border-radius: 10px;
-  }
-  .max-height-limit {
-    max-height: 230px;
-    overflow-y auto
-  }
+    .color-box,
+    .checkbox, label,
+    label input,
+    .real-label,
+    select,
+    input {
+        vertical-align middle
+    }
+    .checkbox, label, label input {
+        cursor: pointer;
+        white-space: nowrap;
+        max-width: 100%;
+        color: white
+    }
+
+    input {
+        margin: 1px 0 0 -1px;
+    }
+    .color-box {
+        width: 6px;
+        height: 12px;
+        display: inline-block;
+        border-radius: 1px;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+
+    .check-tooltip {
+        position: absolute;
+        opacity: 0;
+        //position relative
+        //opacity 1 !important;
+        padding 3px;
+        min-width: 36px;
+        max-width 200px
+        z-index: 1;
+        font: 12px sans-serif;
+        background: white;
+        border: 1px solid #949597;
+        box-shadow: 0 0 1px 0 rgba(69, 66, 66, 0.75);
+        border-radius: 3px;
+        pointer-events: none;
+    }
+
+    .badge {
+        background: rgb(244, 128, 36);
+        color: #F2F3F0;
+        border: 1px solid rgb(244, 128, 36);
+        text-align: center;
+        font-weight: bold;
+        padding: 2px;
+        font-size 120%
+    }
+
+    .years-checkbox:after {
+        display: none;
+    }
+
+    .years-checkbox {
+        text-align: left;
+        padding: 0;
+        border: none;
+        box-shadow: 0 0 1px 0 rgba(69, 66, 66, 0.75);
+        border-radius: 1px;
+        width: 50px;
+    }
+
+    .real-label {
+        line-height: 16px;
+        overflow: hidden;
+        white-space: nowrap;
+        display: inline-block;
+    }
+    .checkbox {
+        position relative
+        padding: 1px 4px;
+        lable[title]:hover:after {
+            content: attr(title);
+            padding: 4px 8px;
+            color: #333;
+            position: absolute;
+            left: 0;
+            top: 100%;
+            z-index: 20;
+            white-space: nowrap;
+            border-radius: 25px;
+            box-shadow: 0 0 4px #222;
+            background-color: red;
+        }
+    }
+
+    .wrapper {
+        margin-bottom: 5px;
+        width: 100%;
+        box-shadow: 0 0 1px 1px rgba(152, 152, 152, 0.75);
+        background: #9B9C9F;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+    .max-height-limit {
+        max-height: 230px;
+        overflow-y auto
+    }
 }
