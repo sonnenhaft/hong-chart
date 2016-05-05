@@ -1,4 +1,6 @@
-angular.module('hc.checkboxes-menu', []).directive('checkboxesMenu', function ( $timeout ) {
+angular.module('hc.checkboxes-menu', [
+    'hc.d3.bind-data'
+]).directive('checkboxesMenu', function ( $timeout, d3 ) {
     var SHIFT_YEARS = [];
     for ( var year = 2016; year <= 2030; year++ ) {
         SHIFT_YEARS.push(year);
@@ -17,7 +19,7 @@ angular.module('hc.checkboxes-menu', []).directive('checkboxesMenu', function ( 
                             tooltip.style({
                                 opacity: 0.9,
                                 left: (d3.event.pageX + 10) + 'px',
-                                top: (d3.event.pageY - 28) + 'px'
+                                top: (d3.event.pageY - 50) + 'px'
                             }).text(d[ i ].title);
                         },
                         mouseleave: function () {

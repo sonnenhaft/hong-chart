@@ -1,16 +1,17 @@
 <div class="wrapper">
     <div class="badge" ng-transclude></div>
-
     <div class="max-height-limit">
         <div ng-repeat="chart in data track by chart.id" class="checkbox" ng-class="{bold: chart.$highlight}">
             <label>
-                <select ng-model="chart.$shiftYear" ng-change="chart.$selected = true;onUpdate()" class="years-checkbox" ng-if="yearsShift"
+                <select ng-model="chart.$shiftYear" ng-change="chart.$selected = true;onUpdate()" class="years-checkbox"
+                        ng-if="yearsShift"
                         ng-options="year for year in shiftYears track by year">
                 </select>
             </label>
-            <label title="{{chart.title}}">
+            <label>
                 <input type="checkbox" ng-model="chart.$selected" ng-change="onUpdate()">
-                <div class="color-box" ng-if="chart.color" ng-style="{background: chart.color, visibility: chart.$selected ? 'visible' : 'hidden'}"></div>
+                <div class="color-box" ng-if="chart.color"
+                     ng-style="{background: chart.color, visibility: chart.$selected ? 'visible' : 'hidden'}"></div>
                 <span class="real-label">{{ chart.name }}</span>
                 <select ng-model="chart.$selectedDropDown" ng-change="chart.$selected = true;onUpdate()"
                         class="custom-select"
@@ -21,4 +22,4 @@
         </div>
     </div>
 </div>
-<div class="check-tooltip">sdfsdf</div>
+<div class="check-tooltip"></div>

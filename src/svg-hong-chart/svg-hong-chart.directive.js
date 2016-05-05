@@ -16,9 +16,7 @@ angular.module('hc.svg-hong-chart', [
             var x = d3.scale.linear();
             var y = d3.scale.linear();
             var xAxis = d3.svg.axis().orient('bottom').tickSize(4, 0);
-            var yAxis = d3.svg.axis().orient('left').tickSize(4, 0).tickValues([
-                100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200
-            ]);
+            var yAxis = d3.svg.axis().orient('left').tickSize(4, 0).tickValues(d3.range(0, 1000, 100));
 
             var currentSvgElement = d3.select($element[ 0 ]).select('svg');
             var svg = currentSvgElement.select('.main');
@@ -43,7 +41,7 @@ angular.module('hc.svg-hong-chart', [
                 scaleFactor = htmlWidth > 400 ? 1 : (htmlWidth / 400);
                 svg.attr(translate(margin.left, margin.top));
                 var width = htmlWidth - margin.left - margin.right;
-                var height = htmlWidth / 2 - margin.top - margin.bottom;
+                var height = htmlWidth / 1.5 / (0.4 + 0.6 * scaleFactor) - margin.top - margin.bottom;
                 x.range([ 0, width ]);
                 y.range([ height, 0 ]);
                 xAxis.scale(x);
@@ -151,15 +149,15 @@ angular.module('hc.svg-hong-chart', [
 
                     var lastChart = filteredData[ filteredData.length - 1 ];
                     svg.select('.bau-reduce-area').on({
-                        mousemove: function ( ) {
+                        mousemove: function () {
                             tooltip.style({
                                 opacity: 0.9,
                                 left: (d3.event.pageX + 10) + 'px',
                                 top: (d3.event.pageY - 28) + 'px'
                             });
                         },
-                        mouseleave: function(){
-                            tooltip.style({opacity: 0});
+                        mouseleave: function () {
+                            tooltip.style({ opacity: 0 });
                         }
                     }).transition().attr({
                         fill: 'rgb(248,167,107)',
