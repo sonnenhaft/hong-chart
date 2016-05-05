@@ -10,7 +10,7 @@ angular.module('hong-layout', [
         templateUrl: 'src/hong-layout/hong-layout.html',
         link: function ( $scope, $element ) {
             $q.all({
-                abatementMeasures: getCsv('stubs/AbatementMeasures_v4.csv'),
+                abatementMeasures: getCsv('stubs/AbatementMeasures_v5.csv'),
                 targetsAndBaseLine: getCsv('stubs/TargetsAndBaseline_v1.csv')
             }).then(function ( csvData ) {
                 return {
@@ -19,7 +19,6 @@ angular.module('hong-layout', [
                 };
             }).then(function ( csvData ) {
                 var measures = $scope.abatementMeasures = csvData.abatementMeasures;
-                //console.log(measures)
                 var charts = $scope.targetsAndBaseLine = csvData.targetsAndBaseLine;
                 charts.$version = measures.$version = 0;
                 charts.forEach(function ( d ) {

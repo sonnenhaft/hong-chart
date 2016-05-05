@@ -13,6 +13,7 @@ angular.module('hc.svg-hong-chart', [
         templateUrl: 'src/svg-hong-chart/svg-hong-chart.html',
         scope: { data: '=svgHongChart', tooltip: '=', tooltipYear: '=' },
         link: function ( $scope, $element ) {
+            $scope.isChrome = $window.chrome;
             var x = d3.scale.linear();
             var y = d3.scale.linear();
             var xAxis = d3.svg.axis().orient('bottom').tickSize(4, 0);
@@ -25,14 +26,7 @@ angular.module('hc.svg-hong-chart', [
 
             $scope.tooltipFn = function ( yearIndex, chartIndex, toShow ) {
                 $scope.tooltipYear = yearIndex;
-                var indexes = [ chartIndex ];
-                if ( chartIndex === 0 || chartIndex === $scope.data.length - 1 ) {
-                    indexes = [ 0, $scope.data.length - 1 ];
-                }
-                indexes.forEach(function ( chartIndex ) {
-                    $scope.data[ chartIndex ].$highlight = toShow;
-                });
-
+                $scope.data[ chartIndex ].$highlight = toShow;
                 $scope.$apply();
             };
 

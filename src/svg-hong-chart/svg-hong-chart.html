@@ -7,8 +7,7 @@
     </defs>
     <!--TODO: add radius in here, and add circle as mask, not as component-->
     <g transform="translate(1,1)">
-        <rect rx="25" ry="25" fill="url(#greenHongGradient)" width="99.5%" height="99.5%" stroke="rgb(94,95,97)"
-              stroke-opacity="0.5"></rect>
+        <rect rx="25" ry="25" fill="url(#greenHongGradient)" width="99.5%" height="99.5%" stroke="rgb(94,95,97)" stroke-opacity="0.5"></rect>
     </g>
     <g class="main" font-size="100%">
         <g stroke-dasharray="10,5" opacity="0" stroke="rgb(94,95,97)" class="target-lines opacity-animate">
@@ -35,4 +34,7 @@
         </g>
     </g>
     <circle fill="white" cx="100%" cy="50%" r="25" stroke="rgb(94,95,97)" stroke-width="1px" stroke-opacity="0.5"></circle>
+    <g transform="translate(-1,0)" ng-hide="::isChrome" stroke="white" fill="white" stroke-width="1">
+        <rect width="10" x="100%" y="25%" height="50%"></rect>
+    </g>
 </svg>
