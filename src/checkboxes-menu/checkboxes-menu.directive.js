@@ -9,21 +9,24 @@ angular.module('hc.checkboxes-menu', []).directive('checkboxesMenu', function ( 
         transclude: true,
         templateUrl: 'src/checkboxes-menu/checkboxes-menu.html',
         link: function ( $scope, $element ) {
-            $timeout(function () {
-                var tooltip = d3.selectAll($element).select('.check-tooltip');
-                d3.selectAll($element).selectAll('.checkbox').datum($scope.data).on({
-                    mousemove: function ( d, i ) {
-                        tooltip.style({
-                            opacity: 0.9,
-                            left: (d3.event.pageX + 10) + 'px',
-                            top: (d3.event.pageY - 28) + 'px'
-                        }).text(d[ i ].title);
-                    },
-                    mouseleave: function () {
-                        tooltip.style({ opacity: 0 });
-                    }
+            $scope.$watch('data', function () {
+                $timeout(function () {
+                    var tooltip = d3.selectAll($element).select('.check-tooltip');
+                    d3.selectAll($element).selectAll('.checkbox').datum($scope.data || []).on({
+                        mousemove: function ( d, i ) {
+                            tooltip.style({
+                                opacity: 0.9,
+                                left: (d3.event.pageX + 10) + 'px',
+                                top: (d3.event.pageY - 28) + 'px'
+                            }).text(d[ i ].title);
+                        },
+                        mouseleave: function () {
+                            tooltip.style({ opacity: 0 });
+                        }
+                    });
                 });
             });
+
             if ( !$scope.yearsShift ) {return;}
             $scope.shiftYears = SHIFT_YEARS;
             var removeWatch = $scope.$watch('data', function ( data ) {
