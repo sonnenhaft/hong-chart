@@ -6,7 +6,8 @@ You will get all the sources in zip file.
 #### Init repo and build the project
 After you clone git repo, you need to install NodeJS locally, then to run 
 ```ssh
-npm install -g gulp
+npm install -g gulp && npm install -g bower
+bower install
 ```
 After gulp is installed, from folder with sources you need to run 
 ```ssh
