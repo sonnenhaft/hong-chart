@@ -12,8 +12,8 @@ gulp.task('uglifyJS', function () {
         .pipe(require('gulp-ng-annotate')())
         //.pipe(require('gulp-uglify')())
         .pipe(addsrc.prepend([
-            'bower_components/angular/angular.min.js',
-            'bower_components/d3/d3.min.js'
+            'node_modules/angular/angular.min.js',
+            'node_modules/d3/d3.min.js'
         ]))
         .pipe(concat('hong-chart.js'))
         .pipe(gulp.dest('build'))
