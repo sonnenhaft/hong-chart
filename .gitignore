@@ -1,5 +1,4 @@
 .idea
-build/maps
-build/hong-chart.zip
 node_modules
 src/**/*.css
+build

@@ -2,9 +2,9 @@
   "name": "hong-chart",
   "version": "0.0.2",
   "scripts": {
-        "build": "gulp build",
-        "watch-styles": "gulp $watch-styl"
-    },
+    "build": "gulp build",
+    "watch-styles": "gulp $watch-styl"
+  },
   "devDependencies": {
     "angular": "^1.6.1",
     "d3": "3.5.16",
